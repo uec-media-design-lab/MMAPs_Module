@@ -30,9 +30,9 @@ mmaps.createMMAPs(size=48.8, spacing=0.05, height_scale = 3.0)
 MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除する
     
 **Paramters**
-- mirror_name (string) - ミラーの名前
-- glass_name (string) - ガラスの名前
-- parent_name (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前
+- `mirror_name` (string) - ミラーの名前
+- `glass_name` (string) - ガラスの名前
+- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前
 
 ---
 
@@ -41,10 +41,10 @@ MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除�
 MMAPsを生成する
 
 **Parameters**
-- size (float) - MMAPsの一辺の大きさ
-- spacing (float) - スリットミラー間の間隔
-- height_scale (float) - スリット間隔を基準としてスリットの高さを決めるための倍率
-- overwrite (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する
+- `size` (float) - MMAPsの一辺の大きさ
+- `spacing` (float) - スリットミラー間の間隔
+- `height_scale` (float) - スリット間隔を基準としてスリットの高さを決めるための倍率
+- `overwrite` (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する
 
 ---
 
@@ -53,11 +53,11 @@ MMAPsを生成する
 各スリットミラーを分割したMMAPsを生成する
 
 **Parameters**
-- size (float) - MMAPsの一辺の大きさ
-- spacing (float) - スリットミラー間の間隔
-- detailing (int) - 各ミラーの分割数。デフォルトでは各ミラーを10分割する。
-- height_scale (float) - スリット間隔を基準としてスリットの高さを決めるための倍率
-- overwrite (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する
+- `size` (float) - MMAPsの一辺の大きさ
+- `spacing` (float) - スリットミラー間の間隔
+- `detailing` (int) - 各ミラーの分割数。デフォルトでは各ミラーを10分割する。
+- `height_scale` (float) - スリット間隔を基準としてスリットの高さを決めるための倍率
+- `overwrite` (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する
 
 ---
 
@@ -66,8 +66,8 @@ MMAPsを生成する
 オブジェクトにマテリアルを設定する。`mat_name`で指定される名前のオブジェクトが存在しない場合は新規に作成する。
 
 **Parameters**
-- obj (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
-- mat_name (string) - マテリアルの名前
+- `obj` (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
+- `mat_name` (string) - マテリアルの名前
 
 ---
 
@@ -76,11 +76,11 @@ MMAPsを生成する
 ミラーを生成する。MMAPs内部のミラーを想定しているので、親オブジェクト(`parent`)は必須。
 
 **Parameters**
-- parent (BlendDataObjects) - 親オブジェクト
-- verts (array) - 頂点情報
-- faces (array) - 頂点番号情報(インデックス)
-- obj_name (string) - オブジェクトの名前
-- id (int) - ミラーの番号
+- `parent` (BlendDataObjects) - 親オブジェクト
+- `verts` (array) - 頂点情報
+- `faces` (array) - 頂点番号情報(インデックス)
+- `obj_name` (string) - オブジェクトの名前
+- `id` (int) - ミラーの番号
 
 ---
 
@@ -89,9 +89,9 @@ MMAPsを生成する
 ガラスを生成する。MMAPs内部のガラスを想定しているので、親オブジェクト(`parent`)は必須。
 
 **Parameters**
-- parent (BlendDataObjects) - 親オブジェクト
-- size (float) - ガラスの一辺の大きさ
-- height (float) - ガラスの高さ
-- obj_name (string) - オブジェクトの名前
+- `parent` (BlendDataObjects) - 親オブジェクト
+- `size` (float) - ガラスの一辺の大きさ
+- `height` (float) - ガラスの高さ
+- `obj_name` (string) - オブジェクトの名前
 
 
