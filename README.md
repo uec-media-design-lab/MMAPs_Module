@@ -77,6 +77,7 @@ MMAPsを生成する
 > **attachMirrorMaterial(_obj, mat_name_)**
 
 オブジェクトに鏡のマテリアルを設定する。`mat_name`で指定される名前のオブジェクトが存在しない場合は新規に作成する。
+
 **Parameters**
 - `obj` (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
 - `mat_name` (string) - マテリアルの名前
@@ -86,6 +87,7 @@ MMAPsを生成する
 > **attachGlassMaterial(_obj, mat_name_)**
 
 オブジェクトにガラスのマテリアルを設定する。`mat_name`で指定される名前のオブジェクトが存在しない場合は新規に作成する。
+
 **Parameters**
 - `obj` (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
 - `mat_name` (string) - マテリアルの名前
