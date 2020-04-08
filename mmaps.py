@@ -53,14 +53,14 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True):
             faces = [(0, 1, 2, 3)]
 
             mirror = addMirror(parent = mmaps, verts = verts, faces = faces, obj_name = 'Mirror', id = count)
-            attachMaterial(mirror, mat_name = 'MMAPsMirror')
+            attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
             
             count += 1
 
     # add glass to scene
     glass = addGlass(mmaps, size, height*2, obj_name = 'Glass')
     # attach material to mirror object
-    attachMaterial(glass, mat_name = 'Glass')
+    attachGlassMaterial(glass, mat_name = 'Glass')
 
     # log message
     print('MMAPs (no glass) are successfully created!')
@@ -110,13 +110,13 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
             # add slit mirror to scene
             mirror = addMirror(parent = mmaps, verts = verts, faces = faces, obj_name = 'Mirror', id = count)
             # attach material to mirror object
-            attachMaterial(mirror, mat_name = 'MMAPsMirror')
+            attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
 
             count += 1
     # add glass to scene
     glass = addGlass(mmaps, size, height*2, obj_name = 'Glass')
     # attach material to mirror object
-    attachMaterial(glass, mat_name = 'Glass')
+    attachGlassMaterial(glass, mat_name = 'Glass')
 
     # log message
     print('MMAPs are successfully created!')
@@ -127,7 +127,7 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
 def attachMaterial(obj, mat_name):
     mat = bpy.data.materials.get(mat_name)
     if mat is None:
-        # create materials of each planes
+        # create materials
         mat = bpy.data.materials.new(name=mat_name)
     
     if obj.data.materials:
@@ -136,6 +136,69 @@ def attachMaterial(obj, mat_name):
     else:
         # no slots
         obj.data.materials.append(mat)
+
+# ================================================================================
+def attachMirrorMaterial(obj, mat_name):
+    mat = bpy.data.materials.get(mat_name)
+    if mat is None:
+        # create materials
+        mat = bpy.data.materials.new(name=mat_name)
+    
+    # enable to use node
+    mat.use_nodes = True
+    # clear nodes of material
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+
+    # create princpled bsdf node
+    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
+    bsdf.inputs['Metallic'].default_value = 1.0
+    bsdf.inputs['Roughness'].default_value = 0.01
+    bsdf.location = 0,0
+
+    # create output node
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')
+    node_output.location = 400, 0
+
+    # link nodes
+    links = mat.node_tree.links
+    link = links.new(bsdf.outputs['BSDF'], node_output.inputs['Surface'])
+
+    # clear material of object
+    obj.data.materials.clear()
+    # set material to object
+    obj.data.materials.append(mat)
+
+# ================================================================================
+def attachGlassMaterial(obj, mat_name):
+    mat = bpy.data.materials.get(mat_name)
+    if mat is None:
+        # create materials
+        mat = bpy.data.materials.new(name=mat_name)
+    
+    # enable to use node
+    mat.use_nodes = True
+    # clear nodes of material
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+
+    # create princpled bsdf node
+    bsdf = nodes.new(type='ShaderNodeBsdfGlass')
+    bsdf.inputs['Roughness'].default_value = 0.01
+    bsdf.location = 0,0
+
+    # create output node
+    node_output = nodes.new(type='ShaderNodeOutputMaterial')
+    node_output.location = 400, 0
+
+    # link nodes
+    links = mat.node_tree.links
+    link = links.new(bsdf.outputs['BSDF'], node_output.inputs['Surface'])
+
+    # clear material of object
+    obj.data.materials.clear()
+    # set material to object
+    obj.data.materials.append(mat)
 
 # ================================================================================
 def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
