@@ -25,7 +25,7 @@ mmaps.createMMAPs(size=48.8, spacing=0.05, height_scale = 3.0)
 
 # Functions
 
-> clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)
+> **clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除する
     
@@ -34,7 +34,9 @@ MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除�
 - glass_name (string) - ガラスの名前
 - parent_name (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前
 
-> createMMAPs(_size, spacing, height_scale = 3, overwrite=True_)
+---
+
+> **createMMAPs(_size, spacing, height_scale = 3, overwrite=True_)**
 
 MMAPsを生成する
 
@@ -44,7 +46,9 @@ MMAPsを生成する
 - height_scale (float) - スリット間隔を基準としてスリットの高さを決めるための倍率
 - overwrite (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する
 
-> createDetailedMMAPs(_size, spacing, detailing = 10, height_scale = 3.0, overwrite=True_)
+---
+
+> **createDetailedMMAPs(_size, spacing, detailing = 10, height_scale = 3.0, overwrite=True_)**
 
 各スリットミラーを分割したMMAPsを生成する
 
@@ -55,7 +59,9 @@ MMAPsを生成する
 - height_scale (float) - スリット間隔を基準としてスリットの高さを決めるための倍率
 - overwrite (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する
 
-> attachMaterial(_obj, mat_name_)
+---
+
+> **attachMaterial(_obj, mat_name_)**
 
 オブジェクトにマテリアルを設定する。`mat_name`で指定される名前のオブジェクトが存在しない場合は新規に作成する。
 
@@ -63,7 +69,9 @@ MMAPsを生成する
 - obj (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
 - mat_name (string) - マテリアルの名前
 
-> addMirror(_parent, verts, faces, obj_name = 'Mirror', id = None_)
+---
+
+> **addMirror(_parent, verts, faces, obj_name = 'Mirror', id = None_)**
 
 ミラーを生成する。MMAPs内部のミラーを想定しているので、親オブジェクト(`parent`)は必須。
 
@@ -74,7 +82,9 @@ MMAPsを生成する
 - obj_name (string) - オブジェクトの名前
 - id (int) - ミラーの番号
 
-> addGlass(_parent, size, height, obj_name = 'Glass'_)
+---
+
+> **addGlass(_parent, size, height, obj_name = 'Glass'_)**
 
 ガラスを生成する。MMAPs内部のガラスを想定しているので、親オブジェクト(`parent`)は必須。
 
