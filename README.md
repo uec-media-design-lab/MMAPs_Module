@@ -1,8 +1,11 @@
 # BlenderでMMAPsを作ったりするためのモジュール
 
 # Setup
+versionはそれぞれのBlenderのバージョンに合わせてください。
+これは**Blender2.80**を想定して書いています。
+
 ## Windows
-1. C:/Program Files/Blender Foundation/Blender [version]/[version]/scripts/startup/
+1. C:/Program Files/Blender Foundation/Blender 2.80/2.80/scripts/startup/
 以下にmmaps.pyを配置する
 2. Blenderを起動
 3. pythonで`import mmaps`を実行する
