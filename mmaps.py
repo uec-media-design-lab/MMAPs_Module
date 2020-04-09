@@ -2,6 +2,21 @@ import bpy
 import math
 import numpy as np
 
+size_ = 48.8
+spacing_ = 0.05
+height_scale_ = 3.0
+detailing_ = 10
+
+# ================================================================================
+def showParam():
+    global size_, spacing_, height_scale_, detailing_
+    print('size: {}, spacing: {}, height_scale: {}, detailing: {}'.format(size_, spacing_, height_scale_, detailing_))
+
+# ================================================================================
+def getParam():
+    global size_, spacing_, height_scale_, detailing_
+    return size_, spacing_, height_scale_, detailing_
+
 # ================================================================================
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
     for ob in bpy.data.objects:
@@ -11,11 +26,17 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
 
 # ================================================================================
 def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True):
+    global size_, spacing_, height_scale_
+    size_ = size
+    spacing_ = spacing
+    height_scale_ = height_scale
+    detailing_ = None
+
     if overwrite:
         clearMMAPs()
 
     # the number of slit in each layer
-    numSlit = int( (size/spacing) * math.sqrt(2) )
+    numSlit = int( (size_/spacing) * math.sqrt(2) )
     height = spacing * height_scale
     
     count = 0
@@ -58,22 +79,30 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True):
             count += 1
 
     # add glass to scene
-    glass = addGlass(mmaps, size, height*2, obj_name = 'Glass')
+    glass = addGlass(mmaps, size_, height*2, obj_name = 'Glass')
     # attach material to mirror object
     attachGlassMaterial(glass, mat_name = 'Glass')
 
     # log message
     print('MMAPs (no glass) are successfully created!')
-    print('size: {}, slit spacing: {}, height scale: {}'.format(size, spacing, height_scale))
+    print('size: {}, slit spacing: {}, height scale: {}'.format(size_, spacing, height_scale))
     print('Mirror count: {}'.format(count))
+
+    return mmaps
 
 # ================================================================================
 def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True):
+    global size_, spacing_, height_scale_, detailing_
+    size_ = size
+    spacing_ = spacing
+    detailing_ = detailing
+    height_scale_ = height_scale
+
     if overwrite:
         clearMMAPs()
 
     # the number of slit in each layer
-    numSlit = int( (size / spacing) * math.sqrt(2))
+    numSlit = int( (size_ / spacing) * math.sqrt(2))
     height = spacing * height_scale
     
     count = 0
@@ -114,14 +143,16 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
 
             count += 1
     # add glass to scene
-    glass = addGlass(mmaps, size, height*2, obj_name = 'Glass')
+    glass = addGlass(mmaps, size_, height*2, obj_name = 'Glass')
     # attach material to mirror object
     attachGlassMaterial(glass, mat_name = 'Glass')
 
     # log message
     print('MMAPs are successfully created!')
-    print('size: {}, slit spacing: {}, polygon detailing: {}, height scale: {}'.format(size, spacing, detailing, height_scale))
+    print('size: {}, slit spacing: {}, polygon detailing: {}, height scale: {}'.format(size_, spacing, detailing, height_scale))
     print('Mirror count: {}'.format(count))
+
+    return mmaps
 
 # ================================================================================
 def attachMaterial(obj, mat_name):
