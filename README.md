@@ -28,6 +28,21 @@ mmaps.createMMAPs(size=48.8, spacing=0.05, height_scale = 3.0)
 
 # Functions
 
+> **showParam()**
+
+MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、分割数)を表示
+
+---
+> **getParam()**
+
+MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、分割数)を返す
+
+**Returns**
+- `size` (float) - 一辺の長さ
+- `spacing` (float) - スリット間隔
+- `height_scale` (float) - 高さ比率
+- `detailing` (float) - 分割数
+
 > **clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除する
