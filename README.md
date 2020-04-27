@@ -28,14 +28,24 @@ mmaps.createMMAPs(size=48.8, spacing=0.05, height_scale = 3.0)
 
 # Functions
 
-> **showParam()**
+> **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、分割数)を表示
 
+**Paramters**
+- `mirror_name` (string) - ミラーの名前 _[optional]_ 
+- `glass_name` (string) - ガラスの名前 _[optional]_ 
+- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前 _[optional]_ 
+
 ---
-> **getParam()**
+> **getParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、分割数)を返す
+
+**Paramters**
+- `mirror_name` (string) - ミラーの名前 _[optional]_ 
+- `glass_name` (string) - ガラスの名前 _[optional]_ 
+- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前 _[optional]_ 
 
 **Returns**
 - `size` (float) - 一辺の長さ
@@ -48,9 +58,9 @@ MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、�
 MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除する
     
 **Paramters**
-- `mirror_name` (string) - ミラーの名前
-- `glass_name` (string) - ガラスの名前
-- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前
+- `mirror_name` (string) - ミラーの名前 _[optional]_ 
+- `glass_name` (string) - ガラスの名前 _[optional]_ 
+- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前 _[optional]_ 
 
 ---
 
