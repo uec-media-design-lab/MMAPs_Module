@@ -9,23 +9,23 @@ __detailing = 10
 __isInit = True
 
 # ================================================================================
-def showParam():
-    size, spacing, height_scale, detailing = getParam()
+def showParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
+    size, spacing, height_scale, detailing = getParam(mirror_name, glass_name, parent_name)
     print('size: {}, spacing: {}, height_scale: {}, detailing: {}'.format(size, spacing, height_scale, detailing))
 
 # ================================================================================
-def getParam():
+def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
     global __size, __spacing, __height_scale, __detailing, __isInit
 
     if __isInit:
-        mmaps = bpy.data.objects['MMAPs']
+        mmaps = bpy.data.objects[parent_name]
         mirrorCnt = 0
         maxMirrorSize = 0
         mirrorHeight = 0
         numVertices = 0
         for obj in bpy.data.objects:
             if obj.parent == mmaps:
-                if obj.name.find('Mirror') > -1:
+                if obj.name.find(mirror_name) > -1:
                     mirrorCnt += 1
                     mirrorHeight = obj.dimensions.z
 
