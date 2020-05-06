@@ -7,6 +7,10 @@ __spacing = 0.05
 __height_scale = 3.0
 __detailing = 10
 __isInit = True
+__isGlass = True
+__glass_name = 'Glass'
+__mirror_name = 'Mirror'
+__parent_name = 'MMAPs'
 
 def __getRoundDigit(val):
     if not isinstance(val, float):
@@ -25,12 +29,17 @@ def __getRoundDigit(val):
 
 # ================================================================================
 def showParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
-    size, spacing, height_scale, detailing = getParam(mirror_name, glass_name, parent_name)
-    print('size: {}, spacing: {}, height_scale: {}, detailing: {}'.format(size, spacing, height_scale, detailing))
+    global __mirror_name, __glass_name, __parent_name
+
+    __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
+    size, spacing, height_scale, detailing, isGlass = getParam(__mirror_name, __glass_name, __parent_name)
+    print('size: {}, spacing: {}, height_scale: {}, detailing: {}, Glass exists: {}'.format(size, spacing, height_scale, detailing, isGlass))
 
 # ================================================================================
 def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
-    global __size, __spacing, __height_scale, __detailing, __isInit
+    global __size, __spacing, __height_scale, __detailing, __isInit, __isGlass, __mirror_name, __glass_name, __parent_name
+
+    __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
 
     if __isInit:
         mmaps = bpy.data.objects[parent_name]
@@ -66,9 +75,11 @@ def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'
         # This module have already initialized.
         __isInit = False
 
-        return __size, __spacing, __height_scale, __detailing
+        __isGlass = bpy.data.objects.get(__glass_name) is not None
+
+        return __size, __spacing, __height_scale, __detailing, __isGlass
     else:
-        return __size, __spacing, __height_scale, __detailing
+        return __size, __spacing, __height_scale, __detailing, __isGlass
 
 # ================================================================================
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
@@ -78,13 +89,14 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
             bpy.data.objects.remove(ob)
 
 # ================================================================================
-def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True):
+def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.45):
     global __size, __spacing, __height_scale
     __size = size
     __spacing = spacing
     __height_scale = height_scale
     __detailing = None
     __isInit = False
+    __isGlass = isGlass
 
     # Delete exiting MMAPs
     if overwrite:
@@ -136,10 +148,11 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True):
             
             count += 1
 
-    # Add glass object to current scene
-    glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass')
-    # Attach material to glass object
-    attachGlassMaterial(glass, mat_name = 'Glass')
+    if __isGlass:
+        # Add glass object to current scene
+        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', center=glass_center)
+        # Attach material to glass object
+        attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
     # Log message
     print('MMAPs (no glass) are successfully created!')
@@ -149,13 +162,14 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True):
     return mmaps
 
 # ================================================================================
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True):
+def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.45):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
     __detailing = detailing
     __height_scale = height_scale
     __isInit = False
+    __isGlass = isGlass
 
     # Delete exiting MMAPs
     if overwrite:
@@ -205,10 +219,11 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
             attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
 
             count += 1
-    # Add glass object to scene
-    glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass')
-    # Attach material to glass object
-    attachGlassMaterial(glass, mat_name = 'Glass')
+    if __isGlass:
+        # Add glass object to scene
+        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', center=glass_center)
+        # Attach material to glass object
+        attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
     # Log message
     print('MMAPs are successfully created!')
@@ -264,7 +279,7 @@ def attachMirrorMaterial(obj, mat_name):
     obj.data.materials.append(mat)
 
 # ================================================================================
-def attachGlassMaterial(obj, mat_name):
+def attachGlassMaterial(obj, mat_name, ior=1.45):
     mat = bpy.data.materials.get(mat_name)
     if mat is None:
         # Create materials
@@ -279,6 +294,7 @@ def attachGlassMaterial(obj, mat_name):
     # Create princpled bsdf node
     bsdf = nodes.new(type='ShaderNodeBsdfGlass')
     bsdf.inputs['Roughness'].default_value = 0.01
+    bsdf.inputs['IOR'].default_value = ior
     bsdf.location = 0,0
 
     # Create output node
@@ -314,17 +330,25 @@ def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
     return mirror
         
 # ================================================================================
-def addGlass(parent, size, height, obj_name = 'Glass'):
-    # Create a new cube
-    bpy.ops.mesh.primitive_cube_add()
+def addGlass(parent, size, height, obj_name = 'Glass', center=False):
+    if center:
+        # Create a new plane
+        bpy.ops.mesh.primitive_plane_add()
+    else:
+        # Create a new cube
+        bpy.ops.mesh.primitive_cube_add()
     
     # Newly created cube will be automatically selected
     glass = bpy.context.selected_objects[0]
     # Change name
     glass.name = 'Glass'
     
-    # Change its dimensions
-    glass.dimensions = (size, size, height)
+    if center:
+        # Change glass's dimensions
+        glass.dimensions = (size, size, 1.0)
+    else:
+        # Change glass's dimensions
+        glass.dimensions = (size, size, height)
     
     # Set parent
     glass.parent = parent
