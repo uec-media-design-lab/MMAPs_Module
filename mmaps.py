@@ -89,7 +89,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
             bpy.data.objects.remove(ob)
 
 # ================================================================================
-def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.45):
+def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
     global __size, __spacing, __height_scale
     __size = size
     __spacing = spacing
@@ -261,7 +261,7 @@ def attachMirrorMaterial(obj, mat_name):
 
     # Create princpled bsdf node
     bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
-    bsdf.inputs['Metallic'].default_value = 1.0
+    bsdf.inputs['Metallic'].default_value = 0.87
     bsdf.inputs['Roughness'].default_value = 0.01
     bsdf.location = 0,0
 
