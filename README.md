@@ -26,6 +26,14 @@ import mmaps
 mmaps.createMMAPs(size=48.8, spacing=0.05, height_scale = 3.0)
 ```
 
+## 最新版
+```python:example.py
+import mmaps
+
+# 鏡の反射率は0.87に設定されています
+mmaps.createDetailedMMAPs(size=48.8, spacing=0.05, height_scale=2.5, detailing=10, ior=1.52)
+```
+
 # Functions
 
 > **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
