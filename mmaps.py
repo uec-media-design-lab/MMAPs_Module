@@ -1,6 +1,7 @@
 import bpy
 import math
 import numpy as np
+from mathutils import *
 
 __size = 48.8
 __spacing = 0.05
@@ -342,6 +343,8 @@ def addGlass(parent, size, height, obj_name = 'Glass', center=False):
     glass = bpy.context.selected_objects[0]
     # Change name
     glass.name = 'Glass'
+    # Set the location to origin of the scene.
+    glass.location = Vector((0, 0, 0))
     
     if center:
         # Change glass's dimensions
