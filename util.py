@@ -2,6 +2,12 @@ import bpy
 from math import *
 from mathutils import *
 import numpy as np 
+from datetime import datetime
+from bpy.app import handlers
+
+# rendering time. This value is reset when 'init_rendertimer' are called.
+render_time = 0
+__TIMER = 0
 
 # cam_obj: Camera object.
 # target_pos: Look at position of camera.
@@ -33,6 +39,20 @@ def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame):
 
         deg += deg_per_frame
         frame_count += 1
-    
+
+def __start_timer(scene):
+    global __TIMER
+    print('start timer')
+    __TIMER = datetime.now()
+
+def __end_timer(scene):
+    global render_time, __TIMER
+    render_time = datetime.now() - __TIMER
+
+def set_rendertimer():
+    global render_time, __TIMER
+    render_time, __TIMER = 0, 0
+    handlers.render_pre.append(__start_timer)
+    handlers.render_post.append(__end_timer)
 
 
