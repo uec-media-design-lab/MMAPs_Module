@@ -163,7 +163,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
     return mmaps
 
 # ================================================================================
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.45):
+def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
