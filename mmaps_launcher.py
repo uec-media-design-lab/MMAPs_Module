@@ -27,11 +27,12 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
         scene = context.scene
         print("Start creating the MMAPs...")
 
-        size = scene.mmaps_size 
-        spacing = scene.slit_spacing 
-        height_scale = scene.slit_heightscale 
-        detailing = scene.plane_detailing 
-        ior = scene.glass_ior
+        digit_func = mmaps.__getRoundDigit
+        size = round(scene.mmaps_size, digit_func(scene.mmaps_size))
+        spacing = round(scene.slit_spacing, digit_func(scene.slit_spacing)) 
+        height_scale = round(scene.slit_heightscale, 2)
+        detailing = int(detailing)
+        ior = round(scene.glass_ior, 2)
         mmaps.createDetailedMMAPs(size=size, spacing=spacing, detailing=detailing, height_scale=height_scale, ior=ior)
 
     @classmethod 

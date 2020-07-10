@@ -4,10 +4,7 @@ from mathutils import *
 import numpy as np 
 from datetime import datetime
 from bpy.app import handlers
-
-# rendering time. This value is reset when 'init_rendertimer' are called.
-render_time = 0
-__TIMER = 0
+import inspect
 
 # cam_obj: Camera object.
 # target_pos: Look at position of camera.
@@ -40,6 +37,11 @@ def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame):
         deg += deg_per_frame
         frame_count += 1
 
+# ========================================================================================
+# rendering time. This value is reset when 'init_rendertimer' are called.
+render_time = 0
+__TIMER = 0
+
 def __start_timer(scene):
     global __TIMER
     print('start timer')
@@ -55,4 +57,10 @@ def set_rendertimer():
     handlers.render_pre.append(__start_timer)
     handlers.render_post.append(__end_timer)
 
+# ========================================================================================
+# For output inspector or parameters of objects to stream.
+def print_inspect(ob):
+    for i in inspect.getmembers(ob):
+        if not i[0].startswith('_'):
+            print(i)
 
