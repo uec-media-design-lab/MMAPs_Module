@@ -1,5 +1,6 @@
 import mmaps 
 import bpy
+import myutil
 import math
 from bpy.props import *
 
@@ -27,11 +28,12 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
         scene = context.scene
         print("Start creating the MMAPs...")
 
-        digit_func = mmaps.__getRoundDigit
+        digit_func = myutil.getRoundDigit
+
         size = round(scene.mmaps_size, digit_func(scene.mmaps_size))
         spacing = round(scene.slit_spacing, digit_func(scene.slit_spacing)) 
         height_scale = round(scene.slit_heightscale, 2)
-        detailing = int(detailing)
+        detailing = int(scene.plane_detailing)
         ior = round(scene.glass_ior, 2)
         mmaps.createDetailedMMAPs(size=size, spacing=spacing, detailing=detailing, height_scale=height_scale, ior=ior)
 

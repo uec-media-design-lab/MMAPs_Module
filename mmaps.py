@@ -1,4 +1,5 @@
 import bpy
+import myutil
 import math
 import numpy as np
 from mathutils import *
@@ -12,21 +13,6 @@ __isGlass = True
 __glass_name = 'Glass'
 __mirror_name = 'Mirror'
 __parent_name = 'MMAPs'
-
-def __getRoundDigit(val):
-    if not isinstance(val, float):
-        return 0
-
-    integer, dicimal = str(val).split('.')
-    if not integer == '0':
-        return 1
-    else:
-        round_digit = 1
-        for i in range(len(dicimal)):
-            if dicimal[i] == '0':
-                round_digit += 1
-            else:
-                return round_digit
 
 # ================================================================================
 def showParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
@@ -62,13 +48,13 @@ def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'
 
         # Size of MMAPs
         __size = maxMirrorSize / math.sqrt(2)
-        __size = round(__size, __getRoundDigit(__size))
+        __size = round(__size, myutil.getRoundDigit(__size))
 
         # Slit's parameters
         __spacing = maxMirrorSize / (mirrorCnt / 2)
         __height_scale = mirrorHeight / __spacing
-        __spacing = round(__spacing, __getRoundDigit(__spacing))
-        __height_scale = round(__height_scale, __getRoundDigit(__height_scale))
+        __spacing = round(__spacing, myutil.getRoundDigit(__spacing))
+        __height_scale = round(__height_scale, myutil.getRoundDigit(__height_scale))
 
         # The number of detailing of each mirror
         __detailing = int(numVertices / 4)
@@ -85,7 +71,12 @@ def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'
 # ================================================================================
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
     for ob in bpy.data.objects:
-        if ob.name.find(mirror_name) > -1 or ob.name.find(glass_name) > -1 or ob.name.find(parent_name) > -1:
+        # Verify whether glass or mirror have parent object named with "parent_name".
+        if ob.parent == bpy.data.objects[parent_name]
+            if ob.name.find(mirror_name) > -1 or ob.name.find(glass_name) > -1:
+                print("REMOVE: "+ob.name)
+                bpy.data.objects.remove(ob)
+        if ob.name.find(parent_name > -1):
             print("REMOVE: "+ob.name)
             bpy.data.objects.remove(ob)
 
