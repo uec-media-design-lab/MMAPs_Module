@@ -5,6 +5,7 @@ import numpy as np
 from datetime import datetime
 from bpy.app import handlers
 import inspect
+import os, sys
 
 # cam_obj: Camera object.
 # target_pos: Look at position of camera.
@@ -80,3 +81,7 @@ def getRoundDigit(val):
             else:
                 return round_digit
 
+# ========================================================================================
+def checkDir(dirpath):
+    if not os.path.exists(dirpath):
+        os.mkdir(dirpath)
