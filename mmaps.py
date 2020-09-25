@@ -72,7 +72,7 @@ def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
     for ob in bpy.data.objects:
         # Verify whether glass or mirror have parent object named with "parent_name".
-        if ob.parent == bpy.data.objects[parent_name]
+        if ob.parent == bpy.data.objects[parent_name]:
             if ob.name.find(mirror_name) > -1 or ob.name.find(glass_name) > -1:
                 print("REMOVE: "+ob.name)
                 bpy.data.objects.remove(ob)
