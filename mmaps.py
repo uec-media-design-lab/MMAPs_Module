@@ -76,9 +76,12 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
             if ob.name.find(mirror_name) > -1 or ob.name.find(glass_name) > -1:
                 print("REMOVE: "+ob.name)
                 bpy.data.objects.remove(ob)
-        if ob.name.find(parent_name > -1):
-            print("REMOVE: "+ob.name)
-            bpy.data.objects.remove(ob)
+
+    # After mirrors and glass are deleted, parent object will be deleted.
+    if bpy.data.objects.get(parent_name) is not None:
+        ob = bpy.data.objects[parent_name]
+        print("REMOVE: "+ob.name)
+        bpy.data.objects.remove(ob)
 
 # ================================================================================
 def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
@@ -91,7 +94,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
     __isGlass = isGlass
 
     # Delete exiting MMAPs
-    if overwrite:
+    if overwrite and bpy.data.objects.get('MMAPs') is not None:
         clearMMAPs()
 
     # The number of slit in each layer
@@ -164,7 +167,7 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
     __isGlass = isGlass
 
     # Delete exiting MMAPs
-    if overwrite:
+    if overwrite and bpy.data.objects.get(__parent_name) is not None:
         clearMMAPs()
 
     # The number of slit in each layer
@@ -174,7 +177,7 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
     count = 0
 
     # Create and register empty object as parent of mirror and glass transformation
-    mmaps = bpy.data.objects.new('MMAPs', None)
+    mmaps = bpy.data.objects.new(__parent_name, None)
     bpy.context.collection.objects.link(mmaps)
     
     for l in range(2):
