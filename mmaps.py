@@ -217,6 +217,9 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
         # Attach material to glass object
         attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
+    # Activate parent object (MMAPs) 
+    bpy.context.view_layer.objects.active = mmaps
+
     # Log message
     print('MMAPs are successfully created!')
     print('size: {}, slit spacing: {}, polygon detailing: {}, height scale: {}'.format(__size, spacing, detailing, height_scale))

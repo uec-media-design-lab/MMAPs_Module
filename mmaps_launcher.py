@@ -43,6 +43,7 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
         parent_name = scene.parent_name
         return bpy.data.objects.get(parent_name) is not None
 
+    # This function is called when "Launch" button is pressed.
     def invoke(self, context, event):
         if context.area.type == "VIEW_3D":
             if self.is_exist(context):
@@ -67,6 +68,7 @@ class MMAP_OT_MMAPsClearer(bpy.types.Operator):
         parent_name = scene.parent_name
         mmaps.clearMMAPs(mirror_name=mirror_name, glass_name=glass_name, parent_name=parent_name)
 
+    # This function is called when "Clear" button is pressed.
     def invoke(self, context, event):
         op_cls = MMAP_OT_MMAPsLancher
         if context.area.type == "VIEW_3D":
@@ -94,6 +96,7 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
         layout.use_property_split = True 
         layout.use_property_decorate = False 
 
+        # Create properties of MMAPs.  
         layout.label(text="MMAPs parameters")
         col = layout.column()
         col.prop(scene, "mmaps_size", text="Size")
@@ -104,6 +107,7 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
         row = layout.row()
         row.operator(launch_op_cls.bl_idname, text='Launch', icon='PLAY')
 
+        # Create object names to delete.
         layout.label(text="Object names of MMAPs")
         col = layout.column()
         col.prop(scene, "mirror_name", text="Mirror name")

@@ -24,7 +24,7 @@ def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame):
     # Insert animation keyframes to camera.
     deg = min_deg
     frame_count = 0
-    while(deg < max_deg):
+    while deg < max_deg:
         x = target_pos.x + distance * sin(radians(deg))
         y = target_pos.y - distance * cos(radians(deg))
         z = target_pos.z 
@@ -37,6 +37,20 @@ def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame):
 
         deg += deg_per_frame
         frame_count += 1
+
+def cam_render_angle(cam_obj, target_pos, distance, deg, filepath, file_format='PNG'):
+    scene = bpy.context.scene
+
+    x = target_pos.x + distance * sin(radians(deg))
+    y = target_pos.y - distance * cos(radians(deg))
+    z = target_pos.z
+
+    cam_obj.location = (x, y, z)
+    cam_obj.rotation_euler = (pi/2, 0, radians(-deg))
+
+    scene.render.image_settings.file_format = file_format 
+    scene.render.filepath = filepath
+    bpy.ops.render.render(write_still=True)
 
 # ========================================================================================
 # rendering time. This value is reset when 'init_rendertimer' are called.
