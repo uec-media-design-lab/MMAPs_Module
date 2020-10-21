@@ -4,6 +4,13 @@ import math
 import numpy as np
 from mathutils import *
 
+import sys
+# For profiling memory usage
+sys.path.append('c:\\users\\koizu\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\')
+from memory_profiler import profile
+from memory_profiler import memory_usage
+import gc # garbase collection
+
 __size = 48.8
 __spacing = 0.05
 __height_scale = 3.0
@@ -84,6 +91,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
         bpy.data.objects.remove(ob)
 
 # ================================================================================
+# @profile 
 def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
     global __size, __spacing, __height_scale
     __size = size
@@ -157,6 +165,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
     return mmaps
 
 # ================================================================================
+# @profile 
 def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
@@ -214,6 +223,12 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
             attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
 
             count += 1
+        
+        # To reduce memory usage while creating MMAPs. I'm not sure if this code is necessary...
+        del verts 
+        del faces
+        gc.collect()
+
     if __isGlass:
         # Add glass object to scene
         glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', center=glass_center)
