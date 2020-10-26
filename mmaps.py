@@ -7,12 +7,14 @@ import math
 import numpy as np
 from mathutils import *
 
+'''
 import sys
 # For profiling memory usage
 sys.path.append('c:\\users\\koizu\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\')
 from memory_profiler import profile
 from memory_profiler import memory_usage
 import gc # garbase collection
+'''
 
 __size = 48.8
 __spacing = 0.05
@@ -227,10 +229,12 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
 
             count += 1
         
+        '''
         # To reduce memory usage while creating MMAPs. I'm not sure if this code is necessary...
         del verts 
         del faces
         gc.collect()
+        '''
 
     if __isGlass:
         # Add glass object to scene
