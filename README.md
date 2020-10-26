@@ -34,6 +34,11 @@ import mmaps
 mmaps.createDetailedMMAPs(size=48.8, spacing=0.05, height_scale=2.5, detailing=10, ior=1.52)
 ```
 
+# Memo
+- `mmaps.py` にガベージコレクションについての記述を追加しました。
+  - 現状ではメモリ管理の観点からうまく動いているかはわかりません。
+  - 星さんによると、変わらずルーバーを作るときに落ちるそう...
+
 # Functions
 
 > **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
