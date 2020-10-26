@@ -1,3 +1,6 @@
+# NOTE:
+# - If you'd like to show memory usage in a function, please write '@profile' at just before the function. 
+
 import bpy
 import myutil
 import math
