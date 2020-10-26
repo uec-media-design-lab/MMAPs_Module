@@ -99,7 +99,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
 
 # ================================================================================
 # @profile 
-def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
+def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale
     __size = size
     __spacing = spacing
@@ -109,7 +109,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
     __isGlass = isGlass
 
     # Delete exiting MMAPs
-    if overwrite and bpy.data.objects.get('MMAPs') is not None:
+    if isOverwrite and bpy.data.objects.get('MMAPs') is not None:
         clearMMAPs()
 
     # The number of slit in each layer
@@ -173,7 +173,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
 
 # ================================================================================
 # @profile 
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
+def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isOverwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
@@ -183,7 +183,7 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
     __isGlass = isGlass
 
     # Delete exiting MMAPs
-    if overwrite and bpy.data.objects.get(__parent_name) is not None:
+    if isOverwrite and bpy.data.objects.get(__parent_name) is not None:
         clearMMAPs()
 
     # The number of slit in each layer
