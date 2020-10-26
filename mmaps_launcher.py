@@ -23,13 +23,17 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
     bl_label = "MMAPs Launch"
     bl_description = "Launch the MMAPs in scene."
 
+
     @classmethod
     def __launch(cls, context):
+        '''
+        Create MMAPs object include mirrors and glass with specified parameters. 
+        '''
         scene = context.scene
         print("Start creating the MMAPs...")
 
         digit_func = myutil.getRoundDigit
-
+        
         size = round(scene.mmaps_size, digit_func(scene.mmaps_size))
         spacing = round(scene.slit_spacing, digit_func(scene.slit_spacing)) 
         height_scale = round(scene.slit_heightscale, 2)
@@ -39,6 +43,9 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
 
     @classmethod 
     def is_exist(cls, context):
+        '''
+        Check if mmaps is existed
+        '''
         scene = context.scene
         parent_name = scene.parent_name
         return bpy.data.objects.get(parent_name) is not None
@@ -61,6 +68,10 @@ class MMAP_OT_MMAPsClearer(bpy.types.Operator):
 
     @classmethod
     def __clear(cls, context):
+        '''
+        Remove all objects that consist the MMAPs with the name specified in Panel.
+        '''
+
         scene = context.scene
 
         mirror_name = scene.mirror_name
@@ -80,7 +91,11 @@ class MMAP_OT_MMAPsClearer(bpy.types.Operator):
         else:
             return {'CANCELLED'}
 
+# -----------------------------------------------------------------------------------
 class MMAP_PT_MMAPsManager(bpy.types.Panel):
+    '''
+    Panel class to manage MMAPs parameters
+    '''
     bl_label = 'MMAPs'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -89,6 +104,7 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
 
     def draw(self, context):
         scene = context.scene 
+        # Operator class to create or clear MMAPs object.
         launch_op_cls = MMAP_OT_MMAPsLancher
         clear_op_cls = MMAP_OT_MMAPsClearer
 
@@ -104,6 +120,7 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
         col.prop(scene, "slit_heightscale", text="Height scale")
         col.prop(scene, "plane_detailing", text="Mirror detailing")
         col.prop(scene, "glass_ior", text="IOR (glass)")
+        # Add button to call 'invoke()' in MMAP_OT_MMAPsLauncher
         row = layout.row()
         row.operator(launch_op_cls.bl_idname, text='Launch', icon='PLAY')
 
@@ -113,6 +130,7 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
         col.prop(scene, "mirror_name", text="Mirror name")
         col.prop(scene, "glass_name", text="Glass name")
         col.prop(scene, "parent_name", text="MMAPs name")
+        # Add button to call 'invoke()' in MMAP_OT_MMAPsClearer
         row = layout.row()
         row.operator(clear_op_cls.bl_idname, text='Clear', icon='REMOVE')
 

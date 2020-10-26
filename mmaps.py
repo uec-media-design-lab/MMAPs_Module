@@ -42,45 +42,46 @@ def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'
 
     __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
 
-    if __isInit:
-        mmaps = bpy.data.objects[parent_name]
-        mirrorCnt = 0
-        maxMirrorSize = 0
-        mirrorHeight = 0
-        numVertices = 0
-        for obj in bpy.data.objects:
-            if obj.parent == mmaps:
-                if obj.name.find(mirror_name) > -1:
-                    mirrorCnt += 1
-                    mirrorHeight = obj.dimensions.z
-
-                    if obj.dimensions.x > 0 or obj.dimensions.y > 0:
-                        numVertices = len(obj.data.vertices)
-                    
-                    if obj.dimensions.x > maxMirrorSize:
-                        maxMirrorSize = obj.dimensions.x
-
-        # Size of MMAPs
-        __size = maxMirrorSize / math.sqrt(2)
-        __size = round(__size, myutil.getRoundDigit(__size))
-
-        # Slit's parameters
-        __spacing = maxMirrorSize / (mirrorCnt / 2)
-        __height_scale = mirrorHeight / __spacing
-        __spacing = round(__spacing, myutil.getRoundDigit(__spacing))
-        __height_scale = round(__height_scale, myutil.getRoundDigit(__height_scale))
-
-        # The number of detailing of each mirror
-        __detailing = int(numVertices / 4)
-
-        # This module have already initialized.
-        __isInit = False
-
-        __isGlass = bpy.data.objects.get(__glass_name) is not None
-
+    if not __isInit:
         return __size, __spacing, __height_scale, __detailing, __isGlass
-    else:
-        return __size, __spacing, __height_scale, __detailing, __isGlass
+
+    mmaps = bpy.data.objects[parent_name]
+    mirrorCnt = 0
+    maxMirrorSize = 0
+    mirrorHeight = 0
+    numVertices = 0
+    for obj in bpy.data.objects:
+        if obj.parent != mmaps:
+            continue
+        if obj.name.find(mirror_name) > -1:
+            mirrorCnt += 1
+            mirrorHeight = obj.dimensions.z
+
+            if len(obj.data.vertices):
+                numVertices = len(obj.data.vertices)
+                
+            if obj.dimensions.x > maxMirrorSize:
+                maxMirrorSize = obj.dimensions.x
+
+    # Size of MMAPs
+    __size = maxMirrorSize / math.sqrt(2)
+    __size = round(__size, myutil.getRoundDigit(__size))
+
+    # Slit's parameters
+    __spacing = maxMirrorSize / (mirrorCnt / 2)
+    __height_scale = mirrorHeight / __spacing
+    __spacing = round(__spacing, myutil.getRoundDigit(__spacing))
+    __height_scale = round(__height_scale, myutil.getRoundDigit(__height_scale))
+
+    # The number of detailing of each mirror
+    __detailing = int(numVertices / 4)
+
+    # This module have already initialized.
+    __isInit = False
+
+    __isGlass = bpy.data.objects.get(__glass_name) is not None
+
+    return __size, __spacing, __height_scale, __detailing, __isGlass
 
 # ================================================================================
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):

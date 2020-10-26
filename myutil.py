@@ -38,7 +38,7 @@ def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame):
         deg += deg_per_frame
         frame_count += 1
 
-def cam_render_angle(cam_obj, target_pos, distance, deg, filepath, file_format='PNG'):
+def render_with_angle(cam_obj, target_pos, distance, deg, filepath, file_format='PNG'):
     scene = bpy.context.scene
 
     x = target_pos.x + distance * sin(radians(deg))
@@ -53,7 +53,7 @@ def cam_render_angle(cam_obj, target_pos, distance, deg, filepath, file_format='
     bpy.ops.render.render(write_still=True)
 
 # ========================================================================================
-# rendering time. This value is reset when 'init_rendertimer' are called.
+# rendering time. This value is reset when 'set_rendertimer' are called.
 render_time = 0
 __TIMER = 0
 
