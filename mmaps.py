@@ -99,7 +99,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
 
 # ================================================================================
 # @profile 
-def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
+def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale
     __size = size
     __spacing = spacing
@@ -160,7 +160,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
 
     if __isGlass:
         # Add glass object to current scene
-        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', center=glass_center)
+        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', isCenter=isGlassCenter)
         # Attach material to glass object
         attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
@@ -173,7 +173,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, overwrite=True, isGlass=True,
 
 # ================================================================================
 # @profile 
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.52):
+def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
@@ -242,7 +242,7 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
 
     if __isGlass:
         # Add glass object to scene
-        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', center=glass_center)
+        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', isCenter=isGlassCenter)
         # Attach material to glass object
         attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
@@ -354,8 +354,8 @@ def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
     return mirror
         
 # ================================================================================
-def addGlass(parent, size, height, obj_name = 'Glass', center=False):
-    if center:
+def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False):
+    if isCenter:
         # Create a new plane
         bpy.ops.mesh.primitive_plane_add()
     else:
@@ -369,7 +369,7 @@ def addGlass(parent, size, height, obj_name = 'Glass', center=False):
     # Set the location to origin of the scene.
     glass.location = Vector((0, 0, 0))
     
-    if center:
+    if isCenter:
         # Change glass's dimensions
         glass.dimensions = (size, size, 1.0)
     else:
