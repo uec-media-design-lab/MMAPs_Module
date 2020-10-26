@@ -7,6 +7,8 @@ import math
 import numpy as np
 from mathutils import *
 
+# If you'd like to profile memory usage and/or use garbage collection, 
+# please comment out the following code. 
 '''
 import sys
 # For profiling memory usage
@@ -229,7 +231,9 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, overw
 
             count += 1
         
+        
         '''
+        # I experimentally tried using garbage collection, but I'm not sure if gc work well according to Hoshi san's opinion...
         # To reduce memory usage while creating MMAPs. I'm not sure if this code is necessary...
         del verts 
         del faces
