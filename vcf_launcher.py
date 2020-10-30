@@ -33,7 +33,7 @@ class VCF_OT_VCFLancher(bpy.types.Operator):
 
         mmaps_size = round(scene.vcf_size, digit_func(scene.vcf_size))
         display_size = round(scene.vcf1_size, digit_func(scene.vcf1_size))
-        spacing = round(scene.slit_spacing, digit_func(scene.slit_spacing)) 
+        spacing = round(scene.vcf_slit_spacing, digit_func(scene.vcf_slit_spacing)) 
         view_angle = round(scene.view_angle, 2)
         mbta = round(scene.mbta, 2)
         #ior = round(scene.glass_ior, 2)
@@ -44,8 +44,8 @@ class VCF_OT_VCFLancher(bpy.types.Operator):
     @classmethod 
     def is_exist(cls, context):
         scene = context.scene
-        parent_name = scene.parent_name
-        return bpy.data.objects.get(parent_name) is not None
+        vcf_parent_name = scene.vcf_parent_name
+        return bpy.data.objects.get(vcf_parent_name) is not None
 
     # This function is called when "Launch" button is pressed.
     def invoke(self, context, event):
@@ -67,10 +67,10 @@ class VCF_OT_VCFClearer(bpy.types.Operator):
     def __clear(cls, context):
         scene = context.scene
 
-        louver_name = scene.louver_name
-        glass_name = scene.glass_name 
-        parent_name = scene.parent_name
-        vcf.clearVCF(louver_name=louver_name, glass_name=glass_name, parent_name=parent_name)
+        vcf_louver_name = scene.vcf_louver_name
+        vcf_glass_name = scene.vcf_glass_name 
+        vcf_parent_name = scene.vcf_parent_name
+        vcf.clearVCF(louver_name=vcf_louver_name, glass_name=vcf_glass_name, parent_name=vcf_parent_name)
 
     # This function is called when "Clear" button is pressed.
     def invoke(self, context, event):
@@ -105,7 +105,7 @@ class VCF_PT_VCFManager(bpy.types.Panel):
         col = layout.column()
         col.prop(scene, "vcf_size", text="MMAPs size")
         col.prop(scene, "vcf1_size", text="Display size")
-        col.prop(scene, "slit_spacing", text="Slit spacing")
+        col.prop(scene, "vcf_slit_spacing", text="Slit spacing")
         col.prop(scene, "view_angle", text="View angle")
         col.prop(scene, "mbta", text="Mbta")
         #col.prop(scene, "glass_ior", text="IOR (glass)")
@@ -115,9 +115,9 @@ class VCF_PT_VCFManager(bpy.types.Panel):
         # Create object names to delete.
         layout.label(text="Object names of VCF")
         col = layout.column()
-        col.prop(scene, "louver_name", text="Louver name")
-        col.prop(scene, "glass_name", text="Glass name")
-        col.prop(scene, "parent_name", text="VCF name")
+        col.prop(scene, "vcf_louver_name", text="Louver name")
+        col.prop(scene, "vcf_glass_name", text="Glass name")
+        col.prop(scene, "vcf_parent_name", text="VCF name")
         row = layout.row()
         row.operator(clear_op_cls.bl_idname, text='Clear', icon='REMOVE')
 
@@ -136,7 +136,7 @@ def init_props():
         default=17.5
     )
 
-    scene.slit_spacing = FloatProperty(
+    scene.vcf_slit_spacing = FloatProperty(
         name="Slit spacing of VCF",
         min = 0.0001,
         default = 0.0132
@@ -162,15 +162,15 @@ def init_props():
     )
     '''
 
-    scene.louver_name = StringProperty(
+    scene.vcf_louver_name = StringProperty(
         name="The name of louver object.",
         default="Louver"
     )
-    scene.glass_name = StringProperty(
+    scene.vcf_glass_name = StringProperty(
         name="The name of glass object.",
         default = "Glass"
     )
-    scene.parent_name = StringProperty(
+    scene.vcf_parent_name = StringProperty(
         name="The name of VCF",
         default="VCF"
     )
@@ -179,13 +179,13 @@ def clear_props():
     scene = bpy.types.Scene 
     del scene.vcf_size
     del scene.vcf1_size
-    del scene.slit_spacing
+    del scene.vcf_slit_spacing
     del scene.view_angle
     del scene.mbta
     #del scene.glass_ior
-    del scene.louver_name
-    del scene.glass_name
-    del scene.parent_name
+    del scene.vcf_louver_name
+    del scene.vcf_glass_name
+    del scene.vcf_parent_name
 
 classes = [
     VCF_OT_VCFLancher,

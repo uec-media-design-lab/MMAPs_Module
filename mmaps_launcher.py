@@ -35,11 +35,11 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
         digit_func = myutil.getRoundDigit
         
         size = round(scene.mmaps_size, digit_func(scene.mmaps_size))
-        spacing = round(scene.slit_spacing, digit_func(scene.slit_spacing)) 
-        height_scale = round(scene.slit_heightscale, 2)
-        detailing = int(scene.plane_detailing)
-        ior = round(scene.glass_ior, 2)
-        mmaps.createDetailedMMAPs(size=size, spacing=spacing, detailing=detailing, height_scale=height_scale, ior=ior)
+        spacing = round(scene.mmaps_slit_spacing, digit_func(scene.mmaps_slit_spacing)) 
+        height_scale = round(scene.mmaps_slit_heightscale, 2)
+        mmaps_detailing = int(scene.mmaps_detailing)
+        ior = round(scene.mmaps_glass_ior, 2)
+        mmaps.createDetailedMMAPs(size=size, spacing=spacing, detailing=mmaps_detailing, height_scale=height_scale, ior=ior)
 
     @classmethod 
     def is_exist(cls, context):
@@ -47,8 +47,8 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
         Check if mmaps is existed
         '''
         scene = context.scene
-        parent_name = scene.parent_name
-        return bpy.data.objects.get(parent_name) is not None
+        mmaps_parent_name = scene.mmaps_parent_name
+        return bpy.data.objects.get(mmaps_parent_name) is not None
 
     # This function is called when "Launch" button is pressed.
     def invoke(self, context, event):
@@ -74,10 +74,10 @@ class MMAP_OT_MMAPsClearer(bpy.types.Operator):
 
         scene = context.scene
 
-        mirror_name = scene.mirror_name
-        glass_name = scene.glass_name 
-        parent_name = scene.parent_name
-        mmaps.clearMMAPs(mirror_name=mirror_name, glass_name=glass_name, parent_name=parent_name)
+        mmaps_mirror_name = scene.mmaps_mirror_name
+        mmaps_glass_name = scene.mmaps_glass_name 
+        mmaps_parent_name = scene.mmaps_parent_name
+        mmaps.clearMMAPs(mirror_name=mmaps_mirror_name, glass_name=mmaps_glass_name, parent_name=mmaps_parent_name)
 
     # This function is called when "Clear" button is pressed.
     def invoke(self, context, event):
@@ -116,10 +116,10 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
         layout.label(text="MMAPs parameters")
         col = layout.column()
         col.prop(scene, "mmaps_size", text="Size")
-        col.prop(scene, "slit_spacing", text="Slit spacing")
-        col.prop(scene, "slit_heightscale", text="Height scale")
-        col.prop(scene, "plane_detailing", text="Mirror detailing")
-        col.prop(scene, "glass_ior", text="IOR (glass)")
+        col.prop(scene, "mmaps_slit_spacing", text="Slit spacing")
+        col.prop(scene, "mmaps_slit_heightscale", text="Height scale")
+        col.prop(scene, "mmaps_detailing", text="Mirror detailing")
+        col.prop(scene, "mmaps_glass_ior", text="IOR (glass)")
         # Add button to call 'invoke()' in MMAP_OT_MMAPsLauncher
         row = layout.row()
         row.operator(launch_op_cls.bl_idname, text='Launch', icon='PLAY')
@@ -127,9 +127,9 @@ class MMAP_PT_MMAPsManager(bpy.types.Panel):
         # Create object names to delete.
         layout.label(text="Object names of MMAPs")
         col = layout.column()
-        col.prop(scene, "mirror_name", text="Mirror name")
-        col.prop(scene, "glass_name", text="Glass name")
-        col.prop(scene, "parent_name", text="MMAPs name")
+        col.prop(scene, "mmaps_mirror_name", text="Mirror name")
+        col.prop(scene, "mmaps_glass_name", text="Glass name")
+        col.prop(scene, "mmaps_parent_name", text="MMAPs name")
         # Add button to call 'invoke()' in MMAP_OT_MMAPsClearer
         row = layout.row()
         row.operator(clear_op_cls.bl_idname, text='Clear', icon='REMOVE')
@@ -143,39 +143,39 @@ def init_props():
         default=48.8
     )
 
-    scene.slit_spacing = FloatProperty(
+    scene.mmaps_slit_spacing = FloatProperty(
         name="Slit spacing of MMAPs",
         min = 0.0001,
         default = 0.05
     )
 
-    scene.slit_heightscale = FloatProperty(
+    scene.mmaps_slit_heightscale = FloatProperty(
         name="Height scale of mirror to slit spacing.",
         min = 0.1,
         default=2.5
     )
 
-    scene.plane_detailing = FloatProperty(
+    scene.mmaps_detailing = FloatProperty(
         name="The number of detailing of mirror.",
         min = 1,
         default=10
     )
 
-    scene.glass_ior = FloatProperty(
+    scene.mmaps_glass_ior = FloatProperty(
         name="Index of reflaction of glass.",
         min = 0.1,
         default=1.52
     )
 
-    scene.mirror_name = StringProperty(
+    scene.mmaps_mirror_name = StringProperty(
         name="The name of mirror object.",
         default="Mirror"
     )
-    scene.glass_name = StringProperty(
+    scene.mmaps_glass_name = StringProperty(
         name="The name of glass object.",
         default = "Glass"
     )
-    scene.parent_name = StringProperty(
+    scene.mmaps_parent_name = StringProperty(
         name="The name of MMAPs",
         default="MMAPs"
     )
@@ -183,13 +183,13 @@ def init_props():
 def clear_props():
     scene = bpy.types.Scene 
     del scene.mmaps_size
-    del scene.slit_spacing
-    del scene.slit_heightscale 
-    del scene.plane_detailing
-    del scene.glass_ior
-    del scene.mirror_name
-    del scene.glass_name
-    del scene.parent_name
+    del scene.mmaps_slit_spacing
+    del scene.mmaps_slit_heightscale 
+    del scene.mmaps_detailing
+    del scene.mmaps_glass_ior
+    del scene.mmaps_mirror_name
+    del scene.mmaps_glass_name
+    del scene.mmaps_parent_name
 
 classes = [
     MMAP_OT_MMAPsLancher,

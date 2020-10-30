@@ -26,9 +26,17 @@ def getParam():
 # ================================================================================
 def clearVCF(louver_name = 'Louver', glass_name = 'Glass', parent_name = 'VCF'):
 	for ob in bpy.data.objects:
-		if ob.name.find(louver_name) > -1 or ob.name.find(glass_name) > -1 or ob.name.find(parent_name) > -1:
-			print("REMOVE: "+ob.name)
-			bpy.data.objects.remove(ob)
+		# Verify whether glass or lauver have parent object named with "parent_name"
+		if ob.parent == bpy.data.objects[parent_name]:
+			if ob.name.find(louver_name) > -1 or ob.name.find(glass_name) > -1:
+				print("REMOVE: "+ob.name)
+				bpy.data.objects.remove(ob)
+	
+	# After louvers and glass are deleted, parent object will be deleted.
+	if bpy.data.objects.get(parent_name) is not None:
+		ob = bpy.data.objects[parent_name]
+		print("REMOVE: "+ob.name)
+		bpy.data.objects.remove(ob)
 
 # ================================================================================
 def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, height = 0.01, clearance = 0, overwrite=True):
