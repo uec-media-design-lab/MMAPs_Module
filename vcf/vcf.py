@@ -13,6 +13,8 @@ view_angle_ = 0
 clearance_ = 0
 detailing_ = 10
 
+parent_names_ = []
+
 # ================================================================================
 def showParam():
 	global size_, spacing_, height_, louver_angle_
@@ -39,7 +41,7 @@ def clearVCF(louver_name = 'Louver', glass_name = 'Glass', parent_name = 'VCF'):
 		bpy.data.objects.remove(ob)
 
 # ================================================================================
-def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, height = 0.01, clearance = 0, overwrite=True):
+def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, height = 0.01, clearance = 0):
 	global size_, spacing_, height_, height_scale_, length_, louver_angle_, view_angle_
 	size_ = size
 	spacing_ = spacing#ルーバーの間隔
@@ -50,9 +52,6 @@ def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, he
 	detailing_ = None
 
 	top_offset=0#上辺のルーバー傾斜方向へのズレ
-
-	if overwrite:
-		clearVCF()
 
 	# the number of slit in each layer
 	numSlit = int( (size_/spacing))
@@ -72,8 +71,6 @@ def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, he
 	vcf = bpy.data.objects.new('VCF', None)
 	bpy.context.collection.objects.link(vcf)
 	for i in range(numSlit):
-		verts = []
-
 		verts = [( -size_/2+(i * spacing_)+top_offset, -size_/2, height_ + clearance_),
 				( -size_/2+(i * spacing_), -size_/2, 0 + clearance_),
 				( -size_/2+(i * spacing_), size_/2, 0 + clearance_),
@@ -91,6 +88,8 @@ def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, he
 	print('size: {}, slit spacing: {}, height: {}'.format(size_, spacing, height_))
 	print('Louver count: {}'.format(count))
 
+	parent_names_.append(vcf.name)
+
 	return vcf
 
 # ================================================================================
@@ -106,8 +105,6 @@ def attachMaterial(obj, mat_name):
 	else:
 		# no slots
 		obj.data.materials.append(mat)
-
-
 
 def attachLouverMaterial(obj, mat_name):
 	mat = bpy.data.materials.get(mat_name)

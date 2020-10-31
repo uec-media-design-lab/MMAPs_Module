@@ -2,7 +2,7 @@
 # - If you'd like to show memory usage in a function, please write '@profile' at just before the function. 
 
 import bpy
-import myutil
+from . import myutil
 import math
 import numpy as np
 from mathutils import *
@@ -100,7 +100,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
 
 # ================================================================================
 # @profile 
-def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
+def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=True, ior=1.52):
     global __size, __spacing, __height_scale
     __size = size
     __spacing = spacing
@@ -108,10 +108,6 @@ def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=Tru
     __detailing = None
     __isInit = False
     __isGlass = isGlass
-
-    # Delete exiting MMAPs
-    if isOverwrite and bpy.data.objects.get('MMAPs') is not None:
-        clearMMAPs()
 
     # The number of slit in each layer
     numSlit = int( (__size/spacing) * math.sqrt(2) )
@@ -174,7 +170,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=Tru
 
 # ================================================================================
 # @profile 
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isOverwrite=True, isGlass=True, isGlassCenter=False, ior=1.52):
+def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
@@ -182,10 +178,6 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isOve
     __height_scale = height_scale
     __isInit = False
     __isGlass = isGlass
-
-    # Delete exiting MMAPs
-    if isOverwrite and bpy.data.objects.get(__parent_name) is not None:
-        clearMMAPs()
 
     # The number of slit in each layer
     numSlit = int( (__size / spacing) * math.sqrt(2))
