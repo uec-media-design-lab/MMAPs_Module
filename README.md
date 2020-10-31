@@ -1,38 +1,39 @@
 # BlenderでMMAPsを作ったりするためのモジュール
 
+- mmaps/ ... MMAPs作成用アドオンフォルダ(開発用)
+  - __init__.py       ... 初期化ファイル
+  - mmaps.py          ... MMAPs生成/削除用モジュール
+  - myutil.py         ... Utility関数モジュール
+  - mmaps_clearer.py  ... MMAPs削除用オペレータクラス
+  - mmaps_launcher.py ... MMAPs生成用オペレータクラス
+  - mmaps_manager.py  ... パラメータ管理用パネルクラス
+- vcf/
+  - __init__.py       ... 初期化ファイル
+  - vcf.py            ... VCF生成/削除用モジュール
+  - myutil.py         ... Utility関数モジュール
+  - vcf_clearer.py    ... VCF削除用オペレータクラス
+  - vcf_launcher.py   ... VCF生成用オペレータクラス
+  - vcf_manager.py    ... パラメータ管理用パネルクラス
+- mmaps.zip           ... インストール用(MMAPs)
+- vcf.zip             ... インストール用(VCF)
+
+# 検証version
+- Blender 2.8.1
+
 # Setup
-versionはそれぞれのBlenderのバージョンに合わせてください。
-これは**Blender2.80**を想定して書いています。
 
-## Windows
-1. C:/Program Files/Blender Foundation/Blender 2.80/2.80/scripts/startup/
-以下にmmaps.pyを配置する
-2. Blenderを起動
-3. pythonで`import mmaps`を実行する
+- Edit -> Preferences を立ち上げ、Add-ons を選択
+- Testing を選択後、Install を押す。
+  - ![](img/addon.png)
+- ファイルエクスプローラーが出るので、`mmaps.zip` or `vcf.zip` を選択。
 
-## Mac
-1. `/Applications/Blender.app/Contents/Resources/2.80/scripts/startup/` 以下にmmaps.pyを配置する
-```
-mv MMAPs_Module/mmaps.py /Applications/Blender.app/Contents/Resources/2.80/scripts/startup/
-```
-2. Blenderを起動
-3. pythonで`import mmaps`を実行する
-
-# Example
-
-```python:example.py
-import mmaps
-
-mmaps.createMMAPs(size=48.8, spacing=0.05, height_scale = 3.0)
-```
-
-## 最新版
-```python:example.py
-import mmaps
-
-# 鏡の反射率は0.87に設定されています
-mmaps.createDetailedMMAPs(size=48.8, spacing=0.05, height_scale=2.5, detailing=10, ior=1.52)
-```
+# パラメータの設定
+- MMAPsサイズ  : 48.8
+- スリット間隔 : 0.05
+- 高さ比率     : 2.5
+- ミラー分割数 : 10
+- 反射率       : 0.87
+- 屈折率       : 1.52
 
 # Memo
 - `mmaps.py` にガベージコレクションについての記述を追加しました。
