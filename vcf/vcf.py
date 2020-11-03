@@ -30,7 +30,7 @@ def clearVCF(louver_name = 'Louver', glass_name = 'Glass', parent_name = 'VCF'):
 	for ob in bpy.data.objects:
 		# Verify whether glass or lauver have parent object named with "parent_name"
 		if ob.parent == bpy.data.objects[parent_name]:
-			if ob.name.find(louver_name) > -1 or ob.name.find(glass_name) > -1:
+			if ob.name.find(louver_name) > -1:
 				print("REMOVE: "+ob.name)
 				bpy.data.objects.remove(ob)
 	
@@ -41,7 +41,7 @@ def clearVCF(louver_name = 'Louver', glass_name = 'Glass', parent_name = 'VCF'):
 		bpy.data.objects.remove(ob)
 
 # ================================================================================
-def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, height = 0.01, clearance = 0):
+def createVCF(name,size, spacing, view_angle = 0, max_beam_transmission_angle = 0, height = 0.01, clearance = 0):
 	global size_, spacing_, height_, height_scale_, length_, louver_angle_, view_angle_
 	size_ = size
 	spacing_ = spacing#ルーバーの間隔
@@ -68,7 +68,7 @@ def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, he
 	count = 0
 
 	# create and register empty object as parent of mirror and glass transformation
-	vcf = bpy.data.objects.new('VCF', None)
+	vcf = bpy.data.objects.new(name+'VCF', None)
 	bpy.context.collection.objects.link(vcf)
 	for i in range(numSlit):
 		verts = [( -size_/2+(i * spacing_)+top_offset, -size_/2, height_ + clearance_),
@@ -76,7 +76,7 @@ def createVCF(size, spacing, view_angle = 0, max_beam_transmission_angle = 0, he
 				( -size_/2+(i * spacing_), size_/2, 0 + clearance_),
 				( -size_/2+(i * spacing_)+top_offset, size_/2, height_ + clearance_)]
 		faces = [(0, 1, 2, 3)]
-		louver = addLouver(parent = vcf, verts = verts, faces = faces, obj_name = 'Louver', id = count)
+		louver = addLouver(parent = vcf, verts = verts, faces = faces, obj_name = name+'Louver', id = count)
 		attachLouverMaterial(louver, mat_name = 'VCF_Louver')
 		del verts
 		del faces
