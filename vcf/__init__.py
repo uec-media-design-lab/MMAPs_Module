@@ -1,7 +1,7 @@
 bl_info = {
     "name": "VCF Launcher",
     "author": "Ayami Hoshi",
-    "version": (1, 0),
+    "version": (2, 0),
     "blender": (2, 80, 0),
     "location": "",
     "description": "This addon is to create VCF in scene.",

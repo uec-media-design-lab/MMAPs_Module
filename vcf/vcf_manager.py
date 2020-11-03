@@ -42,7 +42,7 @@ class VCF_PT_VCFManager(bpy.types.Panel):
         row.operator(launch_dis_op_cls.bl_idname, text='Launch', icon='PLAY')
 
         # Create object names to delete.
-        layout.label(text="Object names of VCF")
+        layout.label(text="Object names of MMAPsVCF")
         col = layout.column()
         col.prop(scene, "vcf_louver_name", text="Louver name")
         col.prop(scene, "vcf_parent_name", text="VCF name")
@@ -50,7 +50,7 @@ class VCF_PT_VCFManager(bpy.types.Panel):
         row.operator(clear_op_cls.bl_idname, text='Clear', icon='REMOVE')
 
         # Create object names to delete.
-        layout.label(text="Object names of VCFDIS")
+        layout.label(text="Object names of DisplayVCF")
         col = layout.column()
         col.prop(scene, "vcfdis_louver_name", text="Louver name")
         col.prop(scene, "vcfdis_parent_name", text="VCFDIS name")
