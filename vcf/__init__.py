@@ -59,6 +59,12 @@ def init_props():
         default = 0.0132
     )
 
+    scene.vcfdis_slit_spacing = FloatProperty(
+        name="Slit spacing of VCF",
+        min = 0.0001,
+        default = 0.0132
+    )
+
     scene.view_angle = FloatProperty(
         name="view_angle.",
         min = 1,
@@ -66,6 +72,18 @@ def init_props():
     )
 
     scene.mbta = FloatProperty(
+        name="mbta.",
+        min = 0,
+        default=25
+    )
+
+    scene.view_angle_dis = FloatProperty(
+        name="view_angle.",
+        min = 1,
+        default=60
+    )
+
+    scene.mbta_dis = FloatProperty(
         name="mbta.",
         min = 0,
         default=25
@@ -94,8 +112,11 @@ def clear_props():
     del scene.vcf_size
     del scene.vcf1_size
     del scene.vcf_slit_spacing
+    del scene.vcfdis_slit_spacing
     del scene.view_angle
     del scene.mbta
+    del scene.view_angle_dis
+    del scene.mbta_dis
     del scene.vcf_louver_name
     del scene.vcf_parent_name
     del scene.vcfdis_louver_name

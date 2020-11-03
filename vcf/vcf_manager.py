@@ -35,9 +35,9 @@ class VCF_PT_VCFManager(bpy.types.Panel):
         layout.label(text="VCF of Display parameters")
         col = layout.column()
         col.prop(scene, "vcf1_size", text="Display size")
-        col.prop(scene, "vcf_slit_spacing", text="Slit spacing")
-        col.prop(scene, "view_angle", text="View angle")
-        col.prop(scene, "mbta", text="Mbta")
+        col.prop(scene, "vcfdis_slit_spacing", text="Slit spacing")
+        col.prop(scene, "view_angle_dis", text="View angle")
+        col.prop(scene, "mbta_dis", text="Mbta")
         row = layout.row()
         row.operator(launch_dis_op_cls.bl_idname, text='Launch', icon='PLAY')
 

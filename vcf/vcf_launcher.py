@@ -51,9 +51,9 @@ class VCF_OT_VCFDISLauncher(bpy.types.Operator):
         digit_func = myutil.getRoundDigit
 
         disp_size = round(scene.vcf1_size, digit_func(scene.vcf1_size))
-        spacing = round(scene.vcf_slit_spacing, digit_func(scene.vcf_slit_spacing)) 
-        view_angle = round(scene.view_angle, 2)
-        mbta = round(scene.mbta, 2)
+        spacing = round(scene.vcfdis_slit_spacing, digit_func(scene.vcfdis_slit_spacing)) 
+        view_angle = round(scene.view_angle_dis, 2)
+        mbta = round(scene.mbta_dis, 2)
         vcf.createVCF(name = 'Display',size=disp_size, spacing=spacing, view_angle = view_angle,max_beam_transmission_angle = mbta)
         
     @classmethod 
