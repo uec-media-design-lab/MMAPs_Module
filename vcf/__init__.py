@@ -32,7 +32,9 @@ from bpy.props import *
 
 classes = [
     vcf_launcher.VCF_OT_VCFLauncher,
+    vcf_launcher.VCF_OT_VCFDISLauncher,
     vcf_clearer.VCF_OT_VCFClearer,
+    vcf_clearer.VCF_OT_VCFDISClearer,
     vcf_manager.VCF_PT_VCFManager
 ]
 
@@ -68,26 +70,23 @@ def init_props():
         min = 0,
         default=25
     )
-    
-    '''
-    scene.glass_ior = FloatProperty(
-        name="Index of reflaction of glass.",
-        min = 0.1,
-        default=1.52
-    )
-    '''
 
     scene.vcf_louver_name = StringProperty(
         name="The name of louver object.",
         default="Louver"
     )
-    scene.vcf_glass_name = StringProperty(
-        name="The name of glass object.",
-        default = "Glass"
-    )
     scene.vcf_parent_name = StringProperty(
         name="The name of VCF",
-        default="VCF"
+        default="MMAPsVCF"
+    )
+    
+    scene.vcfdis_louver_name = StringProperty(
+        name="The name of louver object.",
+        default="Louver"
+    )
+    scene.vcfdis_parent_name = StringProperty(
+        name="The name of VCFDIS",
+        default="DisplayVCF"
     )
 
 def clear_props():
@@ -97,10 +96,10 @@ def clear_props():
     del scene.vcf_slit_spacing
     del scene.view_angle
     del scene.mbta
-    #del scene.glass_ior
     del scene.vcf_louver_name
-    del scene.vcf_glass_name
     del scene.vcf_parent_name
+    del scene.vcfdis_louver_name
+    del scene.vcfdis_parent_name
 
 def register():
     init_props()
