@@ -223,15 +223,6 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isGla
             attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
 
             count += 1
-        
-        
-        '''
-        # I experimentally tried using garbage collection, but I'm not sure if gc work well according to Hoshi san's opinion...
-        # To reduce memory usage while creating MMAPs. I'm not sure if this code is necessary...
-        del verts 
-        del faces
-        gc.collect()
-        '''
 
     if __isGlass:
         # Add glass object to scene
