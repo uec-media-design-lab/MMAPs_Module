@@ -1,4 +1,10 @@
 # BlenderでMMAPsを作ったりするためのモジュール
+- これは、Micro-Mirror Array Platesをblender内で再現するためのモジュールです。
+- 使用方法は[こちら](https://www.media.lab.uec.ac.jp/?p=2569)を参照下さい。
+
+- MMAPsの再現性に関しては[論文](https://doi.org/10.1016/j.cag.2021.02.007)をご確認下さい。
+  -  Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*,2021.
+-  vcf(Louver film)は再現できていません。簡易的なものになっています。
 
 - mmaps/ ... MMAPs作成用アドオンフォルダ(開発用)
   - __init__.py       ... 初期化ファイル
@@ -19,8 +25,7 @@
 
 # 検証version
 - Blender 2.8.1
-- [論文](https://doi.org/10.1016/j.cag.2021.02.007)
-  -   Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*,2021.
+
 
 # Setup
 
