@@ -19,6 +19,8 @@
 
 # 検証version
 - Blender 2.8.1
+- [論文](https://doi.org/10.1016/j.cag.2021.02.007)
+  -   Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*,2021.
 
 # Setup
 
