@@ -1,4 +1,4 @@
-# BlenderでMMAPsを作ったりするためのモジュール
+# BlenderでMMAPsを生成するモジュール
 - これは、Micro-Mirror Array Platesをblender内で再現するためのモジュールです。
 - 使用方法は[こちら](https://www.media.lab.uec.ac.jp/?p=2569)を参照下さい。
 
