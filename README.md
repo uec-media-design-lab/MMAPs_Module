@@ -1,6 +1,6 @@
 # MMAPs Generation Module for Blender
 - This is a module to reproduce Micro-Mirror Array Plates (MMAPs) in Blender.
-- [日本語解説はこちら]()
+- [日本語解説はこちら](https://github.com/uec-media-design-lab/MMAPs_Module/blob/master/READMEJP.md)
 
 - Click [here](https://doi.org/10.1016/j.cag.2021.02.007)  for details.
   -  Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*, Vol. 96, pp. 14--23, 2021.
