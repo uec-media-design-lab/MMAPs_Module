@@ -1,10 +1,9 @@
 # MMAPs Generation Module for Blender
 - This is a module to reproduce Micro-Mirror Array Plates (MMAPs) in Blender.
-- See [this page](https://www.media.lab.uec.ac.jp/?p=2569) on how to use it.
+- [日本語解説はこちら]()
 
-- See [this paper](https://doi.org/10.1016/j.cag.2021.02.007) for reproducibility of MMAPs.
+- Click [here](https://doi.org/10.1016/j.cag.2021.02.007)  for details.
   -  Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*,2021.
-- This module cannot reproduce a complete vcf(Louver film), while it can generate the simplified one.
 
 - mmaps/ ... The folder of MMAPs Generation Module (for developer)
   - \_\_init\_\_.py       ... Initialization file
@@ -13,7 +12,7 @@
   - mmaps_clearer.py  ... Operator class to delete MMAPs
   - mmaps_launcher.py ... Operator class to generate MMAPs
   - mmaps_manager.py  ... Panel class to manage parameters
-- vcf/ ... The folder of VCF Generation Module (for developer)
+- vcf/ ... The folder of VCF Generation Module (`Under development. This is very different from the optical properties of an actual VCF.`)
   - \_\_init\_\_.py       ... Initialization file
   - vcf.py            ... Module to generate/delete VCF
   - myutil.py         ... Utility function module
