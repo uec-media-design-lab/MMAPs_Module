@@ -3,7 +3,7 @@
 - [日本語解説はこちら]()
 
 - Click [here](https://doi.org/10.1016/j.cag.2021.02.007)  for details.
-  -  Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*,2021.
+  -  Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*, Vol. 96, pp. 14--23, 2021.
 
 - mmaps/ ... The folder of MMAPs Generation Module (for developer)
   - \_\_init\_\_.py       ... Initialization file
