@@ -1,26 +1,26 @@
 # MMAPs Generation Module for Blender
-- This is a module to reproduce Micro-Mirror Array Plates (MMAPs) in Blender.
+- This is a module to reproduce Micro-Mirror Array Plates (MMAPs), which are mid-air imaging optical elements, in Blender.
 - [日本語解説はこちら](https://github.com/uec-media-design-lab/MMAPs_Module/blob/master/READMEJP.md)
 
-- Click [here](https://doi.org/10.1016/j.cag.2021.02.007)  for details.
+- See [here](https://doi.org/10.1016/j.cag.2021.02.007)  for details.
   -  Shunji Kiuchi, Naoya Koizumi. Simulating the appearance of mid-air imaging with micro-mirror array plates. *Computers & Graphics*, Vol. 96, pp. 14--23, 2021.
 
-- mmaps/ ... The folder of MMAPs Generation Module (for developer)
+- mmaps/ ... The directory of MMAPs generation Module (for developer)
   - \_\_init\_\_.py       ... Initialization file
   - mmaps.py          ... Module to generate/delete MMAPs
   - myutil.py         ... Utility function module
   - mmaps_clearer.py  ... Operator class to delete MMAPs
   - mmaps_launcher.py ... Operator class to generate MMAPs
   - mmaps_manager.py  ... Panel class to manage parameters
-- vcf/ ... The folder of VCF Generation Module (`Under development. This is very different from the optical properties of an actual VCF.`)
+- vcf/ ... The directory of VCF generation module (`Under development. This is very different from the optical properties of an actual VCF.`)
   - \_\_init\_\_.py       ... Initialization file
   - vcf.py            ... Module to generate/delete VCF
   - myutil.py         ... Utility function module
   - vcf_clearer.py    ... Operator class to delete VCF
   - vcf_launcher.py   ... Operator class to generate VCF
   - vcf_manager.py    ... Panel class to manage parameters
-- mmaps.zip           ... For installing MMAPs Generation Module
-- vcf.zip             ... For installing VCF Generation Module
+- mmaps.zip           ... For installing MMAPs generation module
+- vcf.zip             ... For installing VCF generation module
 
 # Verified version
 - Blender 2.8.1
@@ -43,9 +43,9 @@
 | Reflectance      | 0.87    |
 | IOR              | 1.52    |
 
-# Memo for developer
-- Modify the python files under `mmaps/` or `vcf/` during development.
-- Compress each directory into a zip file after the modification.
+# For developer
+- If you'd like to implement additional features, please modify the python files under `mmaps/` and/or `vcf/`.
+- Before installing them in Blender, compress each directory into a zip file after the modification.
 
 # Functions
 
