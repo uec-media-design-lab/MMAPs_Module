@@ -100,77 +100,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
 
 # ================================================================================
 # @profile 
-def createMMAPs(size, spacing, height_scale = 2.5, isOverwrite=True, isGlass=True, ior=1.52):
-    global __size, __spacing, __height_scale
-    __size = size
-    __spacing = spacing
-    __height_scale = height_scale
-    __detailing = None
-    __isInit = False
-    __isGlass = isGlass
-
-    # The number of slit in each layer
-    numSlit = int( (__size/spacing) * math.sqrt(2) )
-    height = spacing * height_scale
-    
-    count = 0
-    
-    # Create and register empty object as parent of mirror and glass transformation
-    mmaps = bpy.data.objects.new('MMAPs', None)
-    bpy.context.collection.objects.link(mmaps)
-    
-    for l in range(2):
-        # Place slit mirrors in each layer
-        for i in range(numSlit):
-            verts = []
-            glassVerts = []
-            if l == 0:
-                if i <= numSlit / 2:
-                    verts = [((i - numSlit / 2) * spacing, -(i * spacing), 0),
-                             ((i - numSlit / 2) * spacing, -(i * spacing), -height),
-                             ((i - numSlit / 2) * spacing, (i * spacing), -height),
-                             ((i - numSlit / 2) * spacing, (i * spacing), 0)]
-                else:
-                    verts = [((i - numSlit / 2) * spacing, -((numSlit - i) * spacing), 0),
-                             ((i - numSlit / 2) * spacing, -((numSlit - i) * spacing), -height),
-                             ((i - numSlit / 2) * spacing, ((numSlit - i) * spacing), -height),
-                             ((i - numSlit / 2) * spacing, ((numSlit - i) * spacing), 0)]
-            else:
-                if i <= numSlit / 2:
-                    verts = [( -(i * spacing), (i - numSlit / 2) * spacing, height),  
-                             ( -(i * spacing), (i - numSlit / 2) * spacing, 0),  
-                             ( (i * spacing), (i - numSlit / 2) * spacing, 0),  
-                             ( (i * spacing), (i - numSlit / 2) * spacing, height)]  
-                else:
-                    verts = [( -(numSlit - i) * spacing, (i - numSlit / 2) * spacing, height),
-                             ( -(numSlit - i) * spacing, (i - numSlit / 2) * spacing, 0),
-                             ( (numSlit - i) * spacing, (i - numSlit / 2) * spacing, 0),
-                             ( (numSlit - i) * spacing, (i - numSlit / 2) * spacing, height)]
-            faces = [(0, 1, 2, 3)]
-
-            # Add mirror object to current scene
-            mirror = addMirror(parent = mmaps, verts = verts, faces = faces, obj_name = 'Mirror', id = count)
-            # Attach material to mirror object
-            attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
-            
-            count += 1
-
-    if __isGlass:
-        # Add glass object to current scene
-        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', isCenter=isGlassCenter)
-        # Attach material to glass object
-        attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
-
-    # Log message
-    print('MMAPs (no glass) are successfully created!')
-    print('size: {}, slit spacing: {}, height scale: {}'.format(__size, spacing, height_scale))
-    print('Mirror count: {}'.format(count))
-
-    return mmaps
-
-# ================================================================================
-# @profile 
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, isGlassCenter=False, ior=1.52):
+def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
