@@ -338,13 +338,9 @@ def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
     return mirror
         
 # ================================================================================
-def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False):
-    if isCenter:
-        # Create a new plane
-        bpy.ops.mesh.primitive_plane_add()
-    else:
-        # Create a new cube
-        bpy.ops.mesh.primitive_cube_add()
+def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False): #TODO: 引数isCenterの削除
+    # Create a new cube
+    bpy.ops.mesh.primitive_cube_add()
     
     # Newly created cube will be automatically selected
     glass = bpy.context.selected_objects[0]
@@ -353,12 +349,8 @@ def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False):
     # Set the location to origin of the scene.
     glass.location = Vector((0, 0, 0))
     
-    if isCenter:
-        # Change glass's dimensions
-        glass.dimensions = (size, size, 1.0)
-    else:
-        # Change glass's dimensions
-        glass.dimensions = (size, size, height)
+    # Change glass's dimensions
+    glass.dimensions = (size, size, height)
     
     # Set parent
     glass.parent = parent
