@@ -20,7 +20,7 @@ import gc # garbase collection
 
 __size = 48.8
 __spacing = 0.05
-__height_scale = 3.0
+__height_scale = 2.5
 __detailing = 10
 __isInit = True
 __isGlass = True
@@ -100,7 +100,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
 
 # ================================================================================
 # @profile 
-def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=True, ior=1.52):
+def createMMAPs(size, spacing, height_scale = 2.5, isOverwrite=True, isGlass=True, ior=1.52):
     global __size, __spacing, __height_scale
     __size = size
     __spacing = spacing
@@ -170,7 +170,7 @@ def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=Tru
 
 # ================================================================================
 # @profile 
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isGlass=True, isGlassCenter=False, ior=1.52):
+def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
@@ -287,7 +287,7 @@ def attachMirrorMaterial(obj, mat_name):
     obj.data.materials.append(mat)
 
 # ================================================================================
-def attachGlassMaterial(obj, mat_name, ior=1.45):
+def attachGlassMaterial(obj, mat_name, ior=1.52):
     mat = bpy.data.materials.get(mat_name)
     if mat is None:
         # Create materials
