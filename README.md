@@ -47,7 +47,7 @@
 - If you'd like to implement additional features, please modify the python files under `mmaps/` and/or `vcf/`.
 - Before installing them in Blender, compress each directory into a zip file after the modification.
 
-# Functions
+## Functions
 
 > **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
