@@ -84,22 +84,7 @@ MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除�
 
 ---
 
-> **createMMAPs(_size, spacing, height_scale = 2.5, overwrite=True_)**
-
-MMAPsを生成する
-
-**Parameters**
-- `size` (float) - MMAPsの一辺の大きさ
-- `spacing` (float) - スリットミラー間の間隔
-- `height_scale` (float) - スリット間隔に対するスリットの高さの比率
-- `overwrite` (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する _[optional]_ 
-- `isGlass` (bool) - ガラスの有無 _[optional]_ 
-- `glass_center` - ガラスが真ん中かどうか _[optional]_ 
-- `ior` - ガラスの屈折率 _[optional]_ 
-
----
-
-> **createDetailedMMAPs(_size, spacing, detailing = 10, height_scale = 2.5, overwrite=True, isGlass=True, glass_center=False, ior=1.52_)**
+> **createMMAPs(_size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, ior=1.52_)**
 
 各スリットミラーを分割したMMAPsを生成する
 
@@ -108,9 +93,7 @@ MMAPsを生成する
 - `spacing` (float) - スリットミラー間の間隔
 - `detailing` (int) - 各ミラーの分割数。デフォルトでは各ミラーを10分割する。
 - `height_scale` (float) - スリット間隔に対するスリットの高さの比率
-- `overwrite` (bool) - MMAPsが存在した場合に上書きするかどうか。`True`の場合、既存のMMAPsを削除してから新規生成する _[optional]_ 
 - `isGlass` (bool) - ガラスの有無 _[optional]_ 
-- `glass_center` - ガラスが真ん中かどうか _[optional]_ 
 - `ior` - ガラスの屈折率 _[optional]_ 
 
 ---
@@ -168,6 +151,3 @@ MMAPsを生成する
 - `size` (float) - ガラスの一辺の大きさ
 - `height` (float) - ガラスの高さ
 - `obj_name` (string) - オブジェクトの名前
-- `glass_center` - ガラスが真ん中かどうか _[optional]_ 
-
-

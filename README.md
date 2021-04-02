@@ -86,33 +86,16 @@ Delete MMAPs composed of a mirror, a glass, and a parent (empty) object.
 
 ---
 
-> **createMMAPs(_size, spacing, height_scale = 2.5, overwrite=True_)**
-
-Create MMAPs.
-
-**Parameters**
-- `size` (float) - Length of a side of MMAPs
-- `spacing` (float) - Slit spacing
-- `height_scale` (float) - Ratio of slit height to slit spacing
-- `overwrite` (bool) - Whether to overwrite MMAPs if it exists. If this is `True`, create new MMAPs after deleting the existing one. _[optional]_ 
-- `isGlass` (bool) - Presence or absence of the glass _[optional]_ 
-- `glass_center` - Whether the glass is in the middle _[optional]_ 
-- `ior` - Refractive index of the glass _[optional]_ 
-
----
-
-> **createDetailedMMAPs(_size, spacing, detailing = 10, height_scale = 2.5, overwrite=True, isGlass=True, glass_center=False, ior=1.52_)**
+> **createMMAPs(_size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, ior=1.52_)**
 
 Create MMAPs that each slit mirror is divided.
 
 **Parameters**
 - `size` (float) - Length of a side of MMAPs
-- `spacing` (float) - Slit mirror spacing
+- `spacing` (float) - Slit spacing
 - `detailing` (int) - Number of parititions for each mirror. By default, each mirror is divided into 10 parts.
 - `height_scale` (float) - Ratio of slit height to slit spacing
-- `overwrite` (bool) - Whether to overwrite MMAPs if it exists. If this is `True`, create new MMAPs after deleting the existing one. _[optional]_ 
 - `isGlass` (bool) - Presence or absence of the glass _[optional]_ 
-- `glass_center` - Whether the glass is in the middle _[optional]_ 
 - `ior` - Refractive index of the glass _[optional]_ 
 
 ---
@@ -170,6 +153,3 @@ Generate a glass inside MMAPs. The parent object (`parent`) is required because 
 - `size` (float) - Length of a side of the glass
 - `height` (float) - Glass thickness
 - `obj_name` (string) - Object name
-- `glass_center` - Whether the glass is in the middle _[optional]_ 
-
-
