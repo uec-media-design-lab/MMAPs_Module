@@ -1,22 +1,8 @@
-# NOTE:
-# - If you'd like to show memory usage in a function, please write '@profile' at just before the function. 
-
 import bpy
 from . import myutil
 import math
 import numpy as np
 from mathutils import *
-
-# If you'd like to profile memory usage and/or use garbage collection, 
-# please comment out the following code. 
-'''
-import sys
-# For profiling memory usage
-sys.path.append('c:\\users\\koizu\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\')
-from memory_profiler import profile
-from memory_profiler import memory_usage
-import gc # garbase collection
-'''
 
 __size = 48.8
 __spacing = 0.05
@@ -99,7 +85,6 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
         bpy.data.objects.remove(ob)
 
 # ================================================================================
-# @profile 
 def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, isGlassCenter=False, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size

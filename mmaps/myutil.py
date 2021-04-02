@@ -12,7 +12,7 @@ import os, sys
 # distance: Distance between camera and target position.
 # min_deg, max_deg: The range of degree where camera move.
 # num_frame: The number of animation frames.
-def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame):
+def cam_animation(cam_obj, target_pos, distance, min_deg, max_deg, num_frame): #TODO: これが使われているかどうか確認
     # To prevent zero-devision.
     if num_frame is None or num_frame == 0:
         return
