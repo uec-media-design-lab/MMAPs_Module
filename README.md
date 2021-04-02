@@ -49,32 +49,6 @@
 
 ## Functions
 
-> **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
-
-Show MMAPs parameters: the length of a side, the slit spacing, the height scale, and the number of mirror partition.
-
-**Paramters**
-- `mirror_name` (string) - Mirror name _[optional]_ 
-- `glass_name` (string) - Glass name _[optional]_ 
-- `parent_name` (string) - Parent (empty) object name to control the MMAPs posture _[optional]_ 
-
----
-> **getParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
-
-Return MMAPs parameters.
-
-**Paramters**
-- `mirror_name` (string) - Mirror name _[optional]_ 
-- `glass_name` (string) - Glass name _[optional]_ 
-- `parent_name` (string) - Parent (empty) object name to control the MMAPs posture _[optional]_ 
-
-**Returns**
-- `size` (float) - Length of a side of MMAPs
-- `spacing` (float) - Slit spacing
-- `height_scale` (float) - Ratio of slit height to slit spacing
-- `detailing` (float) - Number of the mirror partition
-- `isGlass` (bool) - Presence or absence of the glass
-
 > **clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 Delete MMAPs composed of a mirror, a glass, and a parent (empty) object.
@@ -97,16 +71,6 @@ Create MMAPs that each slit mirror is divided.
 - `height_scale` (float) - Ratio of slit height to slit spacing
 - `isGlass` (bool) - Presence or absence of the glass _[optional]_ 
 - `ior` - Refractive index of the glass _[optional]_ 
-
----
-
-> **attachMaterial(_obj, mat_name_)**
-
-Attach a material to an object. If the object with the name specified by `mat_name` does not exist, create a new one.
-
-**Parameters**
-- `obj` (BlendDataObjects) - Object that the material will attach
-- `mat_name` (string) - Material name
 
 ---
 

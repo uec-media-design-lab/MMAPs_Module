@@ -47,32 +47,6 @@
 
 # Functions
 
-> **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
-
-MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、分割数)を表示
-
-**Paramters**
-- `mirror_name` (string) - ミラーの名前 _[optional]_ 
-- `glass_name` (string) - ガラスの名前 _[optional]_ 
-- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前 _[optional]_ 
-
----
-> **getParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
-
-MMAPsのパラメータ(一辺の長さ、スリット間隔、高さ比率、分割数)を返す
-
-**Paramters**
-- `mirror_name` (string) - ミラーの名前 _[optional]_ 
-- `glass_name` (string) - ガラスの名前 _[optional]_ 
-- `parent_name` (string) - MMAPsの姿勢を制御するための親(空)オブジェクトの名前 _[optional]_ 
-
-**Returns**
-- `size` (float) - 一辺の長さ
-- `spacing` (float) - スリット間隔
-- `height_scale` (float) - スリット間隔に対するスリットの高さの比率
-- `detailing` (float) - 分割数
-- `isGlass` (bool) - ガラスの有無
-
 > **clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除する
@@ -95,16 +69,6 @@ MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除�
 - `height_scale` (float) - スリット間隔に対するスリットの高さの比率
 - `isGlass` (bool) - ガラスの有無 _[optional]_ 
 - `ior` - ガラスの屈折率 _[optional]_ 
-
----
-
-> **attachMaterial(_obj, mat_name_)**
-
-オブジェクトにマテリアルを設定する。`mat_name`で指定される名前のオブジェクトが存在しない場合は新規に作成する。
-
-**Parameters**
-- `obj` (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
-- `mat_name` (string) - マテリアルの名前
 
 ---
 

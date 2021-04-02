@@ -15,61 +15,6 @@ __mirror_name = 'Mirror'
 __parent_name = 'MMAPs'
 
 # ================================================================================
-def showParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
-    global __mirror_name, __glass_name, __parent_name
-
-    __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
-    size, spacing, height_scale, detailing, isGlass = getParam(__mirror_name, __glass_name, __parent_name)
-    print('size: {}, spacing: {}, height_scale: {}, detailing: {}, Glass exists: {}'.format(size, spacing, height_scale, detailing, isGlass))
-
-# ================================================================================
-def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
-    global __size, __spacing, __height_scale, __detailing, __isInit, __isGlass, __mirror_name, __glass_name, __parent_name
-
-    __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
-
-    if not __isInit:
-        return __size, __spacing, __height_scale, __detailing, __isGlass
-
-    mmaps = bpy.data.objects[parent_name]
-    mirrorCnt = 0
-    maxMirrorSize = 0
-    mirrorHeight = 0
-    numVertices = 0
-    for obj in bpy.data.objects:
-        if obj.parent != mmaps:
-            continue
-        if obj.name.find(mirror_name) > -1:
-            mirrorCnt += 1
-            mirrorHeight = obj.dimensions.z
-
-            if len(obj.data.vertices):
-                numVertices = len(obj.data.vertices)
-                
-            if obj.dimensions.x > maxMirrorSize:
-                maxMirrorSize = obj.dimensions.x
-
-    # Size of MMAPs
-    __size = maxMirrorSize / math.sqrt(2)
-    __size = round(__size, myutil.getRoundDigit(__size))
-
-    # Slit's parameters
-    __spacing = maxMirrorSize / (mirrorCnt / 2)
-    __height_scale = mirrorHeight / __spacing
-    __spacing = round(__spacing, myutil.getRoundDigit(__spacing))
-    __height_scale = round(__height_scale, myutil.getRoundDigit(__height_scale))
-
-    # The number of detailing of each mirror
-    __detailing = int(numVertices / 4)
-
-    # This module have already initialized.
-    __isInit = False
-
-    __isGlass = bpy.data.objects.get(__glass_name) is not None
-
-    return __size, __spacing, __height_scale, __detailing, __isGlass
-
-# ================================================================================
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
     for ob in bpy.data.objects:
         # Verify whether glass or mirror have parent object named with "parent_name".
@@ -156,20 +101,6 @@ def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True,
     return mmaps
 
 # ================================================================================
-def attachMaterial(obj, mat_name):
-    mat = bpy.data.materials.get(mat_name)
-    if mat is None:
-        # Create materials
-        mat = bpy.data.materials.new(name=mat_name)
-    
-    if obj.data.materials:
-        # Assign to 1st material slot
-        obj.data.materials[0] = mat
-    else:
-        # There is no material in material slot of object
-        obj.data.materials.append(mat)
-
-# ================================================================================
 def attachMirrorMaterial(obj, mat_name):
     mat = bpy.data.materials.get(mat_name)
     if mat is None:
@@ -253,7 +184,7 @@ def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
     return mirror
         
 # ================================================================================
-def addGlass(parent, size, height, obj_name = 'Glass'): #TODO: 引数isCenterの削除
+def addGlass(parent, size, height, obj_name = 'Glass'):
     # Create a new cube
     bpy.ops.mesh.primitive_cube_add()
     
