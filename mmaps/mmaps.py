@@ -85,7 +85,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
         bpy.data.objects.remove(ob)
 
 # ================================================================================
-def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, isGlassCenter=False, ior=1.52):
+def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
@@ -141,7 +141,7 @@ def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True,
 
     if __isGlass:
         # Add glass object to scene
-        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', isCenter=isGlassCenter)
+        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass')
         # Attach material to glass object
         attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
@@ -253,7 +253,7 @@ def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
     return mirror
         
 # ================================================================================
-def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False): #TODO: 引数isCenterの削除
+def addGlass(parent, size, height, obj_name = 'Glass'): #TODO: 引数isCenterの削除
     # Create a new cube
     bpy.ops.mesh.primitive_cube_add()
     
