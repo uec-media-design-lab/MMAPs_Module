@@ -22,7 +22,7 @@ class MMAP_OT_MMAPsLancher(bpy.types.Operator):
         height_scale = round(scene.mmaps_slit_heightscale, 2)
         mmaps_detailing = int(scene.mmaps_detailing)
         ior = round(scene.mmaps_glass_ior, 2)
-        mmaps.createDetailedMMAPs(size=size, spacing=spacing, detailing=mmaps_detailing, height_scale=height_scale, ior=ior)
+        mmaps.createMMAPs(size=size, spacing=spacing, detailing=mmaps_detailing, height_scale=height_scale, ior=ior)
 
     @classmethod 
     def is_exist(cls, context):

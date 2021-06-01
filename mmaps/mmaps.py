@@ -1,87 +1,18 @@
-# NOTE:
-# - If you'd like to show memory usage in a function, please write '@profile' at just before the function. 
-
 import bpy
 from . import myutil
 import math
 import numpy as np
 from mathutils import *
 
-# If you'd like to profile memory usage and/or use garbage collection, 
-# please comment out the following code. 
-'''
-import sys
-# For profiling memory usage
-sys.path.append('c:\\users\\koizu\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\')
-from memory_profiler import profile
-from memory_profiler import memory_usage
-import gc # garbase collection
-'''
-
 __size = 48.8
 __spacing = 0.05
-__height_scale = 3.0
+__height_scale = 2.5
 __detailing = 10
 __isInit = True
 __isGlass = True
 __glass_name = 'Glass'
 __mirror_name = 'Mirror'
 __parent_name = 'MMAPs'
-
-# ================================================================================
-def showParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
-    global __mirror_name, __glass_name, __parent_name
-
-    __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
-    size, spacing, height_scale, detailing, isGlass = getParam(__mirror_name, __glass_name, __parent_name)
-    print('size: {}, spacing: {}, height_scale: {}, detailing: {}, Glass exists: {}'.format(size, spacing, height_scale, detailing, isGlass))
-
-# ================================================================================
-def getParam(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
-    global __size, __spacing, __height_scale, __detailing, __isInit, __isGlass, __mirror_name, __glass_name, __parent_name
-
-    __mirror_name, __glass_name, __parent_name = mirror_name, glass_name, parent_name
-
-    if not __isInit:
-        return __size, __spacing, __height_scale, __detailing, __isGlass
-
-    mmaps = bpy.data.objects[parent_name]
-    mirrorCnt = 0
-    maxMirrorSize = 0
-    mirrorHeight = 0
-    numVertices = 0
-    for obj in bpy.data.objects:
-        if obj.parent != mmaps:
-            continue
-        if obj.name.find(mirror_name) > -1:
-            mirrorCnt += 1
-            mirrorHeight = obj.dimensions.z
-
-            if len(obj.data.vertices):
-                numVertices = len(obj.data.vertices)
-                
-            if obj.dimensions.x > maxMirrorSize:
-                maxMirrorSize = obj.dimensions.x
-
-    # Size of MMAPs
-    __size = maxMirrorSize / math.sqrt(2)
-    __size = round(__size, myutil.getRoundDigit(__size))
-
-    # Slit's parameters
-    __spacing = maxMirrorSize / (mirrorCnt / 2)
-    __height_scale = mirrorHeight / __spacing
-    __spacing = round(__spacing, myutil.getRoundDigit(__spacing))
-    __height_scale = round(__height_scale, myutil.getRoundDigit(__height_scale))
-
-    # The number of detailing of each mirror
-    __detailing = int(numVertices / 4)
-
-    # This module have already initialized.
-    __isInit = False
-
-    __isGlass = bpy.data.objects.get(__glass_name) is not None
-
-    return __size, __spacing, __height_scale, __detailing, __isGlass
 
 # ================================================================================
 def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'):
@@ -99,78 +30,7 @@ def clearMMAPs(mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAP
         bpy.data.objects.remove(ob)
 
 # ================================================================================
-# @profile 
-def createMMAPs(size, spacing, height_scale = 3.0, isOverwrite=True, isGlass=True, ior=1.52):
-    global __size, __spacing, __height_scale
-    __size = size
-    __spacing = spacing
-    __height_scale = height_scale
-    __detailing = None
-    __isInit = False
-    __isGlass = isGlass
-
-    # The number of slit in each layer
-    numSlit = int( (__size/spacing) * math.sqrt(2) )
-    height = spacing * height_scale
-    
-    count = 0
-    
-    # Create and register empty object as parent of mirror and glass transformation
-    mmaps = bpy.data.objects.new('MMAPs', None)
-    bpy.context.collection.objects.link(mmaps)
-    
-    for l in range(2):
-        # Place slit mirrors in each layer
-        for i in range(numSlit):
-            verts = []
-            glassVerts = []
-            if l == 0:
-                if i <= numSlit / 2:
-                    verts = [((i - numSlit / 2) * spacing, -(i * spacing), 0),
-                             ((i - numSlit / 2) * spacing, -(i * spacing), -height),
-                             ((i - numSlit / 2) * spacing, (i * spacing), -height),
-                             ((i - numSlit / 2) * spacing, (i * spacing), 0)]
-                else:
-                    verts = [((i - numSlit / 2) * spacing, -((numSlit - i) * spacing), 0),
-                             ((i - numSlit / 2) * spacing, -((numSlit - i) * spacing), -height),
-                             ((i - numSlit / 2) * spacing, ((numSlit - i) * spacing), -height),
-                             ((i - numSlit / 2) * spacing, ((numSlit - i) * spacing), 0)]
-            else:
-                if i <= numSlit / 2:
-                    verts = [( -(i * spacing), (i - numSlit / 2) * spacing, height),  
-                             ( -(i * spacing), (i - numSlit / 2) * spacing, 0),  
-                             ( (i * spacing), (i - numSlit / 2) * spacing, 0),  
-                             ( (i * spacing), (i - numSlit / 2) * spacing, height)]  
-                else:
-                    verts = [( -(numSlit - i) * spacing, (i - numSlit / 2) * spacing, height),
-                             ( -(numSlit - i) * spacing, (i - numSlit / 2) * spacing, 0),
-                             ( (numSlit - i) * spacing, (i - numSlit / 2) * spacing, 0),
-                             ( (numSlit - i) * spacing, (i - numSlit / 2) * spacing, height)]
-            faces = [(0, 1, 2, 3)]
-
-            # Add mirror object to current scene
-            mirror = addMirror(parent = mmaps, verts = verts, faces = faces, obj_name = 'Mirror', id = count)
-            # Attach material to mirror object
-            attachMirrorMaterial(mirror, mat_name = 'MMAPsMirror')
-            
-            count += 1
-
-    if __isGlass:
-        # Add glass object to current scene
-        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', isCenter=isGlassCenter)
-        # Attach material to glass object
-        attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
-
-    # Log message
-    print('MMAPs (no glass) are successfully created!')
-    print('size: {}, slit spacing: {}, height scale: {}'.format(__size, spacing, height_scale))
-    print('Mirror count: {}'.format(count))
-
-    return mmaps
-
-# ================================================================================
-# @profile 
-def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isGlass=True, isGlassCenter=False, ior=1.52):
+def createMMAPs(size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, ior=1.52):
     global __size, __spacing, __height_scale, __detailing
     __size = size
     __spacing = spacing
@@ -226,7 +86,7 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isGla
 
     if __isGlass:
         # Add glass object to scene
-        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass', isCenter=isGlassCenter)
+        glass = addGlass(mmaps, __size, height*2, obj_name = 'Glass')
         # Attach material to glass object
         attachGlassMaterial(glass, mat_name = 'Glass', ior=ior)
 
@@ -239,20 +99,6 @@ def createDetailedMMAPs(size, spacing, detailing = 10, height_scale = 3.0, isGla
     print('Mirror count: {}'.format(count))
 
     return mmaps
-
-# ================================================================================
-def attachMaterial(obj, mat_name):
-    mat = bpy.data.materials.get(mat_name)
-    if mat is None:
-        # Create materials
-        mat = bpy.data.materials.new(name=mat_name)
-    
-    if obj.data.materials:
-        # Assign to 1st material slot
-        obj.data.materials[0] = mat
-    else:
-        # There is no material in material slot of object
-        obj.data.materials.append(mat)
 
 # ================================================================================
 def attachMirrorMaterial(obj, mat_name):
@@ -287,7 +133,7 @@ def attachMirrorMaterial(obj, mat_name):
     obj.data.materials.append(mat)
 
 # ================================================================================
-def attachGlassMaterial(obj, mat_name, ior=1.45):
+def attachGlassMaterial(obj, mat_name, ior=1.52):
     mat = bpy.data.materials.get(mat_name)
     if mat is None:
         # Create materials
@@ -338,13 +184,9 @@ def addMirror(parent, verts, faces, obj_name = 'Mirror', id = None):
     return mirror
         
 # ================================================================================
-def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False):
-    if isCenter:
-        # Create a new plane
-        bpy.ops.mesh.primitive_plane_add()
-    else:
-        # Create a new cube
-        bpy.ops.mesh.primitive_cube_add()
+def addGlass(parent, size, height, obj_name = 'Glass'):
+    # Create a new cube
+    bpy.ops.mesh.primitive_cube_add()
     
     # Newly created cube will be automatically selected
     glass = bpy.context.selected_objects[0]
@@ -353,12 +195,8 @@ def addGlass(parent, size, height, obj_name = 'Glass', isCenter=False):
     # Set the location to origin of the scene.
     glass.location = Vector((0, 0, 0))
     
-    if isCenter:
-        # Change glass's dimensions
-        glass.dimensions = (size, size, 1.0)
-    else:
-        # Change glass's dimensions
-        glass.dimensions = (size, size, height)
+    # Change glass's dimensions
+    glass.dimensions = (size, size, height)
     
     # Set parent
     glass.parent = parent

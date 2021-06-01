@@ -49,32 +49,6 @@
 
 ## Functions
 
-> **showParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
-
-Show MMAPs parameters: the length of a side, the slit spacing, the height scale, and the number of mirror partition.
-
-**Paramters**
-- `mirror_name` (string) - Mirror name _[optional]_ 
-- `glass_name` (string) - Glass name _[optional]_ 
-- `parent_name` (string) - Parent (empty) object name to control the MMAPs posture _[optional]_ 
-
----
-> **getParam(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
-
-Return MMAPs parameters.
-
-**Paramters**
-- `mirror_name` (string) - Mirror name _[optional]_ 
-- `glass_name` (string) - Glass name _[optional]_ 
-- `parent_name` (string) - Parent (empty) object name to control the MMAPs posture _[optional]_ 
-
-**Returns**
-- `size` (float) - Length of a side of MMAPs
-- `spacing` (float) - Slit spacing
-- `height_scale` (float) - Height scale
-- `detailing` (float) - Number of the mirror partition
-- `isGlass` (bool) - Presence or absence of the glass
-
 > **clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 Delete MMAPs composed of a mirror, a glass, and a parent (empty) object.
@@ -86,44 +60,17 @@ Delete MMAPs composed of a mirror, a glass, and a parent (empty) object.
 
 ---
 
-> **createMMAPs(_size, spacing, height_scale = 3, overwrite=True_)**
-
-Create MMAPs.
-
-**Parameters**
-- `size` (float) - Length of a side of MMAPs
-- `spacing` (float) - Slit spacing
-- `height_scale` (float) - Magnification to determine the slit height based on the slit spacing
-- `overwrite` (bool) - Whether to overwrite MMAPs if it exists. If this is `True`, create new MMAPs after deleting the existing one. _[optional]_ 
-- `isGlass` (bool) - Presence or absence of the glass _[optional]_ 
-- `glass_center` - Whether the glass is in the middle _[optional]_ 
-- `ior` - Refractive index of the glass _[optional]_ 
-
----
-
-> **createDetailedMMAPs(_size, spacing, detailing = 10, height_scale = 3.0, overwrite=True, isGlass=True, glass_center=False, ior=1.45_)**
+> **createMMAPs(_size, spacing, detailing = 10, height_scale = 2.5, isGlass=True, ior=1.52_)**
 
 Create MMAPs that each slit mirror is divided.
 
 **Parameters**
 - `size` (float) - Length of a side of MMAPs
-- `spacing` (float) - Slit mirror spacing
+- `spacing` (float) - Slit spacing
 - `detailing` (int) - Number of parititions for each mirror. By default, each mirror is divided into 10 parts.
-- `height_scale` (float) - Magnification to determine the slit height based on the slit spacing
-- `overwrite` (bool) - Whether to overwrite MMAPs if it exists. If this is `True`, create new MMAPs after deleting the existing one. _[optional]_ 
+- `height_scale` (float) - Ratio of slit height to slit spacing
 - `isGlass` (bool) - Presence or absence of the glass _[optional]_ 
-- `glass_center` - Whether the glass is in the middle _[optional]_ 
 - `ior` - Refractive index of the glass _[optional]_ 
-
----
-
-> **attachMaterial(_obj, mat_name_)**
-
-Attach a material to an object. If the object with the name specified by `mat_name` does not exist, create a new one.
-
-**Parameters**
-- `obj` (BlendDataObjects) - Object that the material will attach
-- `mat_name` (string) - Material name
 
 ---
 
@@ -137,7 +84,7 @@ Attach a mirror material to an object. If the object with the name specified by 
 
 ---
 
-> **attachGlassMaterial(_obj, mat_name, ior=1.45_)**
+> **attachGlassMaterial(_obj, mat_name, ior=1.52_)**
 
 Attach a glass material to an object. If the object with the name specified by `mat_name` does not exist, create a new one.
 
@@ -170,6 +117,3 @@ Generate a glass inside MMAPs. The parent object (`parent`) is required because 
 - `size` (float) - Length of a side of the glass
 - `height` (float) - Glass thickness
 - `obj_name` (string) - Object name
-- `glass_center` - Whether the glass is in the middle _[optional]_ 
-
-
