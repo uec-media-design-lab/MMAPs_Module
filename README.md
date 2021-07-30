@@ -79,7 +79,7 @@ Create MMAPs that each slit mirror is divided.
 Attach a mirror material to an object. If the object with the name specified by `mat_name` does not exist, create a new one.
 
 **Parameters**
-- `obj` (BlendDataObjects) - Object that the material will attach
+- `obj` (BlendDataObjects) - Object that the material will be attached
 - `mat_name` (string) - Material name
 
 ---
@@ -101,8 +101,8 @@ Generate a mirror inside MMAPs. The parent object (`parent`) is required because
 
 **Parameters**
 - `parent` (BlendDataObjects) - Parent object
-- `verts` (array) - Vertexes coordinate data
-- `faces` (array) - Vertexes index data
+- `verts` (array) - Coordinates of vertices
+- `faces` (array) - Face indices of vertices
 - `obj_name` (string) - Object name
 - `id` (int) - Mirror number
 
