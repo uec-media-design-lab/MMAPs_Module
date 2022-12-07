@@ -47,6 +47,8 @@
 
 # Functions
 
+## MMAPs Launcher
+
 > **clearMMAPs(_mirror_name = 'Mirror', glass_name = 'Glass', parent_name = 'MMAPs'_)**
 
 MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除する
@@ -115,3 +117,53 @@ MMAPs(ミラー、ガラス、空オブジェクトで構成される)を削除�
 - `size` (float) - ガラスの一辺の大きさ
 - `height` (float) - ガラスの高さ
 - `obj_name` (string) - オブジェクトの名前
+
+
+
+## VCF Launcher
+
+> **clearVCF(louver_name = 'Louver', glass_name = 'Glass', parent_name = 'VCF')**
+
+VCF(ルーバー、空オブジェクトで構成される)を削除する
+    
+**Paramters**
+- `louver_name` (string) - ルーバーの名前 _[optional]_ 
+- `glass_name` (string) - ガラスの名前 _[optional]_ 
+- `parent_name` (string) - VCFの姿勢を制御するための親(空)オブジェクトの名前 _[optional]_ 
+
+---
+
+> **createVCF(name,size, spacing, view_angle = 0, max_beam_transmission_angle = 0, height = 0.01, clearance = 0)**
+
+ルーバーを並べたVCFを生成する
+
+**Parameters**
+- `size` (float) - MMAPsの一辺の大きさ
+- `spacing` (float) - ルーバーの間隔
+- `view_angle` (float) - VCFの視野角
+- `max_beam_transmission_angle` (float) - 平面に垂直な面からのルーバーの角度
+- `height` (float) - VCFの高さ
+- `clearance` (float) - ルーバーの開始位置余白
+
+---
+
+> **attachLouverMaterial(_obj, mat_name_)**
+
+オブジェクトに吸光材のマテリアルを設定する。`mat_name`で指定される名前のオブジェクトが存在しない場合は新規に作成する。
+
+**Parameters**
+- `obj` (BlendDataObjects) - マテリアルを設定する対象のオブジェクト
+- `mat_name` (string) - マテリアルの名前
+
+---
+
+> **addMLouver(_parent, verts, faces, obj_name = 'Louver', id = None_)**
+
+ルーバーを生成する。フィルム内のルーバーを想定しているので、親オブジェクト(`parent`)は必須。
+
+**Parameters**
+- `parent` (BlendDataObjects) - 親オブジェクト
+- `verts` (array) - 頂点情報
+- `faces` (array) - 頂点番号情報(インデックス)
+- `obj_name` (string) - オブジェクトの名前
+- `id` (int) - ルーバーの番号
