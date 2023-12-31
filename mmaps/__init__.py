@@ -84,7 +84,7 @@ def init_props():
         name="Height scale of mirror to slit spacing in layer 1", min=0.1, default=2.5
     )
     scene.custom_mmap_degree_layer1 = FloatProperty(
-        name="Degree of mirror in layer 1", min=0.0, default=90.0
+        name="Degree of mirror in layer 1", min=0.0, default=0.0
     )
     scene.custom_mmap_ior_layer1 = FloatProperty(
         name="Index of refraction in layer 1", min=1.0, default=1.52
@@ -94,7 +94,7 @@ def init_props():
         name="Height scale of mirror to slit spacing in layer 2", min=0.1, default=2.5
     )
     scene.custom_mmap_degree_layer2 = FloatProperty(
-        name="Degree of mirror in layer 2", min=0.0, default=90.0
+        name="Degree of mirror in layer 2", min=0.0, default=0.0
     )
     scene.custom_mmap_ior_layer2 = FloatProperty(
         name="Index of refraction in layer 2", min=1.0, default=1.52
