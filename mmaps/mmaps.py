@@ -162,20 +162,18 @@ def createCustomMMAP(
             count += 1
 
     if isGlass:
-        for layer in range(2):
-            # Add glass object to scene
-            sign = -1 if layer == 0 else 1
-            # Offset height considering the angle of mirror
-            glass_height = heights[layer] * math.cos(math.radians(degrees[layer]))
-            glass = addLayerGlass(
-                mmaps,
-                size,
-                glass_height,
-                Vector((0, 0, sign * glass_height / 2)),
-                obj_name=f"Glass_Layer{layer}",
-            )
-            # Attach material to glass object
-            attachGlassMaterial(glass, mat_name=f"Glass_Layer{layer}", ior=iors[layer])
+        height1 = heights[0] * math.cos(math.radians(degrees[0]))
+        height2 = heights[1] * math.cos(math.radians(degrees[1]))
+        total_height = height1 + height2
+
+        center = (0, 0, -height1 + total_height / 2)
+
+        glass = addGlass(
+            mmaps, size, total_height, obj_name="Glass_Layer", center=center
+        )
+
+        # Attach material to glass object
+        attachGlassMaterial(glass, mat_name=f"Glass_Layer{layer}", ior=iors[layer])
 
     # Activate parent object (MMAP)
     bpy.context.view_layer.objects.active = mmaps
@@ -452,16 +450,16 @@ def addLayerGlass(parent, size, height, center, obj_name="Glass"):
 
 
 # ================================================================================
-def addGlass(parent, size, height, obj_name="Glass"):
+def addGlass(parent, size, height, obj_name="Glass", center=(0, 0, 0)):
     # Create a new cube
     bpy.ops.mesh.primitive_cube_add()
 
     # Newly created cube will be automatically selected
     glass = bpy.context.selected_objects[0]
     # Change name
-    glass.name = "Glass"
+    glass.name = obj_name
     # Set the location to origin of the scene.
-    glass.location = Vector((0, 0, 0))
+    glass.location = center
 
     # Change glass's dimensions
     glass.dimensions = (size, size, height)
