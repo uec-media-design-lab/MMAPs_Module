@@ -4,8 +4,6 @@ import bpy
 import numpy as np
 from mathutils import *
 
-from . import myutil
-
 __size = 48.8
 __spacing = 0.05
 __height_scale = 2.5
@@ -94,25 +92,21 @@ def createCustomMMAP(
             for j in range(int(detailing)):
                 if layer == 0:
                     v1 = (
-                        # (i - num_slit / 2) * spacing,
                         0,
                         -mirror_size * 0.5 + (j / detailing) * mirror_size,
                         0,
                     )
                     v2 = (
-                        # (i - num_slit / 2) * spacing,
                         0,
                         -mirror_size * 0.5 + (j / detailing) * mirror_size,
                         -heights[layer],
                     )
                     v3 = (
-                        # (i - num_slit / 2) * spacing,
                         0,
                         -mirror_size * 0.5 + ((j + 1) / detailing) * mirror_size,
                         -heights[layer],
                     )
                     v4 = (
-                        # (i - num_slit / 2) * spacing,
                         0,
                         -mirror_size * 0.5 + ((j + 1) / detailing) * mirror_size,
                         0,
@@ -124,25 +118,21 @@ def createCustomMMAP(
                 else:
                     v1 = (
                         -mirror_size * 0.5 + (j / detailing) * mirror_size,
-                        # (i - num_slit / 2) * spacing,
                         0,
                         heights[layer],
                     )
                     v2 = (
                         -mirror_size * 0.5 + (j / detailing) * mirror_size,
-                        # (i - num_slit / 2) * spacing,
                         0,
                         0,
                     )
                     v3 = (
                         -mirror_size * 0.5 + ((j + 1) / detailing) * mirror_size,
-                        # (i - num_slit / 2) * spacing,
                         0,
                         0,
                     )
                     v4 = (
                         -mirror_size * 0.5 + ((j + 1) / detailing) * mirror_size,
-                        # (i - num_slit / 2) * spacing,
                         0,
                         heights[layer],
                     )
@@ -153,14 +143,15 @@ def createCustomMMAP(
             faces = [tuple(np.arange(4 * detailing))]
 
             # Add mirror object to the current scene
-            mirror = addMirror(
+            mirror = addRotateMirror(
                 parent=mmaps,
                 verts=verts,
                 faces=faces,
                 obj_name=f"Mirror_Layer{layer}",
                 id=count,
                 location=location,
-                x_degree=degrees[layer],
+                degree=degrees[layer],
+                rotate_axis="Y" if layer == 0 else "X",
             )
             attachMirrorMaterial(mirror, mat_name="MMAPsMirror")
             count += 1
@@ -169,11 +160,13 @@ def createCustomMMAP(
         for layer in range(2):
             # Add glass object to scene
             sign = -1 if layer == 0 else 1
+            # Offset height considering the angle of mirror
+            glass_height = heights[layer] * math.cos(math.radians(degrees[layer]))
             glass = addLayerGlass(
                 mmaps,
                 size,
-                heights[layer],
-                Vector((0, 0, sign * heights[layer] / 2)),
+                glass_height,
+                Vector((0, 0, sign * glass_height / 2)),
                 obj_name=f"Glass_Layer{layer}",
             )
             # Attach material to glass object
@@ -369,15 +362,21 @@ def attachGlassMaterial(obj, mat_name, ior=1.52):
 
 
 # ================================================================================
-def addMirror(
+def addRotateMirror(
     parent,
     verts,
     faces,
     obj_name="Mirror",
     id=None,
     location=(0, 0, 0),
-    x_degree: float = None,
+    degree: float = 0.0,
+    rotate_axis="X",
 ):
+    """
+    Add a mirror that rotates on the specified axis in addition to a 45-degree rotation on the z-axis
+    """
+    assert rotate_axis in ["X", "Y"], "rotate_axis must be 'X' or 'Y'"
+
     # Create a new mirror from vertex data
     number = str(id) if not id == None else ""
     mesh = bpy.data.meshes.new("Mirror" + number)
@@ -390,16 +389,38 @@ def addMirror(
     bpy.context.collection.objects.link(mirror)
     mirror.select_set(True)
 
-    # If degree is specified, the mirror will be rotated on x-axis at the first
-    bpy.ops.transform.rotate(value=math.radians(x_degree), orient_axis="X")
-    bpy.ops.transform.translate(value=location)
-    bpy.ops.transform.rotate(value=math.pi / 4, orient_axis="Z")
+    # If degree is specified, the mirror will be rotated on the specified axis
+    mirror.rotation_euler = (
+        (0, -math.radians(degree), -math.pi / 4)
+        if rotate_axis == "Y"
+        else (-math.radians(degree), 0, -math.pi / 4)
+    )
+    mirror.location = location
 
     # Set parent
     mirror.parent = parent
 
     # Deselect object so that prevent global transformation operation
     mirror.select_set(False)
+
+    return mirror
+
+
+# ================================================================================
+def addMirror(parent, verts, faces, obj_name="Mirror", id=None):
+    # Create a new mirror from vertex data
+    number = str(id) if not id == None else ""
+    mesh = bpy.data.meshes.new("Mirror" + number)
+    mesh.from_pydata(verts, [], faces)
+
+    # Create object and change transformation
+    mirror = bpy.data.objects.new(f"{obj_name}_{number}", mesh)
+    mirror.rotation_euler = (0, 0, math.pi / 4)
+
+    # Set parent
+    mirror.parent = parent
+    # Register mirror to scene
+    bpy.context.collection.objects.link(mirror)
 
     return mirror
 

@@ -49,11 +49,11 @@ class MMAP_OT_CustomMMAPClearer(bpy.types.Operator):
         Remove all objects that consist the custom MMAP with the name specified in Panel.
         """
 
-        scene = context.scene
+        # scene = context.scene
 
-        mmaps_mirror_name = scene.mmaps_mirror_name
-        mmaps_glass_name = scene.mmaps_glass_name
-        mmaps_parent_name = scene.mmaps_parent_name
+        # mmaps_mirror_name = scene.mmaps_mirror_name
+        # mmaps_glass_name = scene.mmaps_glass_name
+        # mmaps_parent_name = scene.mmaps_parent_name
         mmaps.clearCustomMMAP()
 
     # This function is called when "Clear" button is pressed.

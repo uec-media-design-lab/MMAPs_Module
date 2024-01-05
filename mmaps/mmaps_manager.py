@@ -1,5 +1,3 @@
-import math
-
 import bpy
 
 from . import mmaps_clearer, mmaps_launcher

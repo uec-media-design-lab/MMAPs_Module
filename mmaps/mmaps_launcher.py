@@ -83,8 +83,8 @@ class MMAP_OT_CustomMMAPLauncher(bpy.types.Operator):
         ior1 = round(scene.custom_mmap_ior_layer1, 2)
         ior2 = round(scene.custom_mmap_ior_layer2, 2)
 
-        layer1 = mmaps.LayerProperty(height1, degree1, ior1)
-        layer2 = mmaps.LayerProperty(height2, degree2, ior2)
+        layer1 = mmaps.LayerProperty(height1, ior1, degree1)
+        layer2 = mmaps.LayerProperty(height2, ior2, degree2)
 
         detailing = scene.custom_mmap_detailing
         mmaps.createCustomMMAP(
