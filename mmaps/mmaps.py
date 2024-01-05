@@ -21,6 +21,11 @@ class LayerProperty:
         self.ior = ior
         self.degree = degree
 
+    def __str__(self):
+        return (
+            f"Height scale: {self.height_scale}, IOR: {self.ior}, Degree: {self.degree}"
+        )
+
 
 # ================================================================================
 def clearMMAPs(mirror_name="Mirror", glass_name="Glass", parent_name="MMAPs"):
